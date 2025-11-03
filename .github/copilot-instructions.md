@@ -1,0 +1,5 @@
+- [x] Structure Next.js, TypeScript, Tailwind CSS créée
+- [ ] Ajouter la première page selon la maquette
+- [ ] Ajouter les composants graphiques
+- [ ] Personnaliser le style et le contenu
+- [ ] Finaliser et tester le site

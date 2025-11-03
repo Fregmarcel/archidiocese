@@ -1,0 +1,115 @@
+[
+  {
+    "name": "Zone Pastorale d’Akono",
+    "code": "ZP-AKONO",
+    "slug": "zone-pastorale-d-akono",
+    "description": "Paroisses de la zone pastorale d’Akono.",
+    "leaders": [],
+    "parishes": [
+      {
+        "name": "Akono — Notre-Dame des Sept-Douleurs",
+        "address": "Akono",
+        "description": "Paroisse Notre-Dame des Sept-Douleurs d’Akono.",
+        "staff": [
+          { "name": "P. Alexandre MVOGO ENAMA", "role": "Curé", "congregation": "cmf" },
+          { "name": "P. Prosper HELONA", "role": "Vicaire", "congregation": "cmf" },
+          { "name": "P. Emérent EYO Fils", "role": "Vicaire", "congregation": "cmf" }
+        ]
+      },
+      {
+        "name": "Mfida — Sainte Famille",
+        "address": "Mfida",
+        "description": "Paroisse Sainte Famille de Mfida.",
+        "staff": [
+          { "name": "P. Emmanuel Conrad YENE", "role": "Curé", "congregation": "cmf" }
+        ]
+      },
+      {
+        "name": "Nkol-Melen (Otelé) — Marie Reine des Apôtres",
+        "address": "Nkol-Melen (Otelé)",
+        "description": "Paroisse Marie Reine des Apôtres.",
+        "staff": [
+          { "name": "A. Alfred Martin Édith ABEGA", "role": "Curé" }
+        ]
+      },
+      {
+        "name": "Ozom (Otelé Centre) — Saint Nicolas",
+        "address": "Ozom (Otelé Centre)",
+        "description": "Paroisse Saint Nicolas.",
+        "staff": [
+          { "name": "A. Salomon Jodel ONGUENE", "role": "Curé" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Zone Pastorale d’Awae",
+    "code": "ZP-AWAE",
+    "slug": "zone-pastorale-d-awae",
+    "description": "Paroisses de la zone pastorale d’Awae.",
+    "leaders": [],
+    "parishes": [
+      {
+        "name": "Ekombitie — Sacré-Cœur de Jésus",
+        "address": "Ekombitie",
+        "description": "Paroisse Sacré-Cœur de Jésus.",
+        "staff": [
+          { "name": "A. Conrad II AMOUGOU ONDOA", "role": "Curé" }
+        ]
+      },
+      {
+        "name": "Elat-Minkom — Marie Reine de l’Univers",
+        "address": "Elat-Minkom",
+        "description": "Paroisse Marie Reine de l’Univers.",
+        "staff": [
+          { "name": "P. Serge Didier MBIA", "role": "Curé", "congregation": "sac" },
+          { "name": "P. Alix MBEZELE", "role": "Vicaire", "congregation": "sac" },
+          { "name": "P. Laurent MESSI", "role": "Vicaire", "congregation": "sac" }
+        ]
+      },
+      {
+        "name": "Messa Mvele — Nativité de la Ste Vierge Marie",
+        "address": "Messa Mvele",
+        "description": "Paroisse Nativité de la Sainte Vierge Marie.",
+        "staff": [
+          { "name": "A. Romuald METILA", "role": "Curé" },
+          { "name": "A. Éric Dieudonné MVOGO MESSANGA", "role": "Vicaire" }
+        ]
+      }
+    ]
+  },
+  {
+    "name": "Zone Pastorale de Bikok",
+    "code": "ZP-BIKOK",
+    "slug": "zone-pastorale-de-bikok",
+    "description": "Paroisses de la zone pastorale de Bikok.",
+    "leaders": [],
+    "parishes": [
+      {
+        "name": "Abang-Mindi — Saints Pierre et Paul",
+        "address": "Abang-Mindi",
+        "description": "Paroisse Saints Pierre et Paul.",
+        "staff": [
+          { "name": "P. Liboire ONDOBO", "role": "Curé", "congregation": "cmf" }
+        ]
+      },
+      {
+        "name": "Akok-Bekoe — Saint Jacques Apôtre",
+        "address": "Akok-Bekoe",
+        "description": "Paroisse Saint Jacques Apôtre.",
+        "staff": [
+          { "name": "A. Théodore Bienvenu MBARGA BEKOLO", "role": "Curé" },
+          { "name": "A. Franck Elvis ONGONO ONGONO", "role": "Vicaire" }
+        ]
+      },
+      {
+        "name": "Bikok — Saint Fabien",
+        "address": "Bikok",
+        "description": "Paroisse Saint Fabien.",
+        "staff": [
+          { "name": "A. Nicolas NTAMACK BIHOLONG", "role": "Curé" }
+        ]
+      }
+    ]
+  }
+]
