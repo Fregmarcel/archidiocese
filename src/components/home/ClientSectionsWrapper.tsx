@@ -26,19 +26,9 @@ const PartnersNetworks = dynamic(() => import("@/components/sections/PartnersNet
   loading: () => <div className="animate-pulse bg-gray-100 h-32"></div>
 });
 
-const MesRealisationsCarousel = dynamic(() => import("@/components/sections/MesRealisationsCarousel"), { 
-  ssr: false,
-  loading: () => <div className="animate-pulse bg-gray-100 h-64"></div>
-});
-
 const NewsletterBandModal = dynamic(() => import("@/components/sections/NewsletterBandModal"), { 
   ssr: false,
   loading: () => <div className="animate-pulse bg-gray-100 h-16"></div>
-});
-
-const Testimonials = dynamic(() => import("@/components/sections/Testimonials"), {
-  ssr: false,
-  loading: () => <div className="animate-pulse bg-gray-100 h-56"></div>
 });
 
 export default function ClientSectionsWrapper({ locale }: { locale: string }) {
@@ -49,9 +39,7 @@ export default function ClientSectionsWrapper({ locale }: { locale: string }) {
       <NewsCarousel locale={locale} />
       <EventsAgenda locale={locale} />
       <PartnersNetworks locale={locale} />
-      <MesRealisationsCarousel />
       <NewsletterBandModal locale={locale} />
-      <Testimonials />
     </>
   );
 }

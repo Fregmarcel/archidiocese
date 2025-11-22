@@ -5,7 +5,7 @@ import { BookOpen, GraduationCap, Award, ChevronDown, ChevronUp } from "lucide-r
 type Props = { locale: string };
 
 export default function ArchbishopMessage({ locale }: Props) {
-  const [activeTab, setActiveTab] = useState<"biographie" | "publications">("biographie");
+  const [activeTab, setActiveTab] = useState<"description" | "biographie" | "publications">("description");
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
     primaire: false,
     secondaire: false,
@@ -61,12 +61,6 @@ export default function ArchbishopMessage({ locale }: Props) {
                 <p className="text-lg text-[#BE2722] font-semibold mt-1">
                   Archevêque Métropolitain de Yaoundé
                 </p>
-                <p className="text-sm text-neutral-600 mt-2 italic">
-                  « Ut Vitam habeant et abundantius habeant »
-                </p>
-                <p className="text-xs text-neutral-500">
-                  « afin qu'ils aient la vie et qu'ils l'aient en abondance » (Jn 10,10)
-                </p>
               </div>
             </div>
           </div>
@@ -75,6 +69,17 @@ export default function ArchbishopMessage({ locale }: Props) {
           <div className="lg:col-span-2">
             {/* Onglets */}
             <div className="flex gap-2 mb-6">
+              <button
+                onClick={() => setActiveTab("description")}
+                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                  activeTab === "description"
+                    ? "bg-[#BE2722] text-white shadow-md"
+                    : "bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200"
+                }`}
+              >
+                <Award className="w-5 h-5" />
+                Présentation
+              </button>
               <button
                 onClick={() => setActiveTab("biographie")}
                 className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
@@ -100,6 +105,48 @@ export default function ArchbishopMessage({ locale }: Props) {
             </div>
 
             {/* Contenu des onglets */}
+            {activeTab === "description" && (
+              <div className="bg-white rounded-lg shadow-md border border-neutral-200 p-8">
+                <div className="text-center mb-8">
+                  <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
+                    Mgr Jean MBARGA
+                  </h2>
+                  <p className="text-xl text-[#BE2722] font-semibold mb-6">
+                    Archevêque Métropolitain de Yaoundé
+                  </p>
+                  <div className="max-w-2xl mx-auto">
+                    <p className="text-lg text-neutral-600 italic mb-3">
+                      « Ut Vitam habeant et abundantius habeant »
+                    </p>
+                    <p className="text-base text-neutral-500">
+                      « afin qu'ils aient la vie et qu'ils l'aient en abondance » (Jn 10,10)
+                    </p>
+                  </div>
+                </div>
+
+                <div className="prose prose-lg max-w-none text-neutral-700 leading-relaxed">
+                  <p className="text-justify mb-4">
+                    Pasteur dévoué et théologien reconnu, Monseigneur Jean MBARGA guide l'Archidiocèse de Yaoundé depuis 2014 avec sagesse et engagement. Son parcours exceptionnel témoigne d'une vie consacrée au service de l'Église et à l'épanouissement spirituel des fidèles.
+                  </p>
+                  <p className="text-justify mb-4">
+                    Docteur en Théologie Morale et titulaire d'une Maîtrise en Droit Canonique, il a marqué l'Église camerounaise par ses responsabilités successives : Recteur du Grand Séminaire de Nkolbisson, Évêque d'Ébolowa-Kribi, et aujourd'hui Archevêque Métropolitain de Yaoundé.
+                  </p>
+                  <p className="text-justify mb-4">
+                    Sa vision pastorale se caractérise par une attention particulière portée à la formation des fidèles, à l'inculturation de la foi et au dialogue entre l'Évangile et les réalités africaines contemporaines. Grand Chancelier de l'Université Catholique d'Afrique Centrale (UCAC) et fondateur de l'Institut Universitaire Catholique Sainte Thérèse de Yaoundé (INUCASTY), il œuvre inlassablement pour l'éducation et la formation intégrale de la jeunesse.
+                  </p>
+                  <p className="text-justify">
+                    Auteur prolifique, Monseigneur MBARGA a publié de nombreux ouvrages qui enrichissent la réflexion théologique et spirituelle en Afrique. Sa devise épiscopale, tirée de l'Évangile selon Saint Jean, résume sa mission : permettre à chacun d'avoir la vie en abondance.
+                  </p>
+                </div>
+
+                <div className="mt-8 pt-6 border-t border-neutral-200">
+                  <p className="text-center text-sm text-neutral-600">
+                    Pour en savoir plus sur son parcours complet, consultez sa <button onClick={() => setActiveTab("biographie")} className="text-[#BE2722] font-semibold hover:underline">biographie détaillée</button> et découvrez ses <button onClick={() => setActiveTab("publications")} className="text-[#BE2722] font-semibold hover:underline">publications</button>.
+                  </p>
+                </div>
+              </div>
+            )}
+            
             {activeTab === "biographie" && (
               <div className="space-y-4">
                 {/* Cursus Primaire */}

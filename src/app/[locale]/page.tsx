@@ -1,6 +1,5 @@
 import ArchbishopMessage from "@/components/sections/ArchbishopMessage";
 import CurieDiocesaineEnhanced from "@/components/sections/CurieDiocesaineEnhanced";
-import AdmissionsConcours from "@/components/sections/AdmissionsConcours";
 import HomeClientSections from "@/components/home/HomeClientSections";
 
 export default async function LocaleHome({ params }: { params: Promise<{ locale: string }> }) {
@@ -14,9 +13,6 @@ export default async function LocaleHome({ params }: { params: Promise<{ locale:
 
       {/* Puis les sections interactives (inclut Hero) */}
       <HomeClientSections locale={locale} />
-
-      {/* Autres blocs */}
-      <AdmissionsConcours locale={locale} />
     </>
   );
 }
