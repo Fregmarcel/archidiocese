@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, use } from 'react';
 import { Play } from 'lucide-react';
 
 interface TVShow {
@@ -16,8 +16,8 @@ interface TVShow {
   broadcastDate: string | Date;
 }
 
-export default function TelevisionPage({ params }: { params: { locale: string } }) {
-  const { locale } = params;
+export default function TelevisionPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = use(params);
   const [shows, setShows] = useState<TVShow[]>([]);
   const [loading, setLoading] = useState(true);
 

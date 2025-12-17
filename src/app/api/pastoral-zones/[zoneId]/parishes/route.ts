@@ -3,11 +3,11 @@ import { connect } from '@/lib/mongodb';
 import Parish from '@/models/Parish';
 import mongoose from 'mongoose';
 
-export async function GET(request: NextRequest, { params }: { params: { zoneId: string } }) {
+export async function GET(request: NextRequest, { params }: { params: Promise<{ zoneId: string }> }) {
   try {
     await connect();
 
-    const { zoneId } = params;
+    const { zoneId } = await params;
     if (!zoneId || !mongoose.Types.ObjectId.isValid(zoneId)) {
       return NextResponse.json({ success: false, message: 'Paramètre zoneId invalide' }, { status: 400 });
     }

@@ -1,7 +1,7 @@
 import Link from "next/link";
 
-export default function SediPage({ params }: { params: { locale: string } }) {
-  const locale = params?.locale ?? "fr";
+export default async function SediPage({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
 
   return (
     <section className="bg-white">

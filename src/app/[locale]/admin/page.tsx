@@ -6,7 +6,11 @@ import AdminDashboard from "@/components/admin/AdminDashboard";
 
 export const dynamic = "force-dynamic";
 
-export default async function AdminHome({ params }: { params: Promise<{ locale: string }> }) {
+export default async function AdminHome({ 
+  params 
+}: { 
+  params: Promise<{ locale: string }> 
+}) {
   const { locale } = await params;
   const { userId } = await auth();
   if (!userId) return notFound();

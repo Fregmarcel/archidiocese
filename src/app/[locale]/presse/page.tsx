@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
-export default function Page({ params }: { params: { locale: string } }) {
-  const { locale } = params;
+export default async function Page({ params }: { params: Promise<{ locale: string }> }) {
+  const { locale } = await params;
   return (
     <main className="container mx-auto px-4 py-10">
       <h1 className="text-2xl md:text-3xl font-extrabold uppercase text-[#25282E]">Presse Diocésaine</h1>
