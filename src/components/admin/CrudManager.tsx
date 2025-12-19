@@ -80,25 +80,42 @@ export default function CrudManager<T extends { _id?: string; name?: string }>({
   const loadData = async () => {
     setLoading(true);
     try {
-      const endpoint = apiEndpoint; // ne pas altérer l'endpoint
+      // Construire l'endpoint avec le locale si nécessaire
+      let endpoint = apiEndpoint;
+      if (options.singleEntity && locale && !endpoint.includes(locale)) {
+        // Pour les entités uniques avec locale (comme archbishop), ajouter le locale à l'URL
+        endpoint = `${apiEndpoint}/${locale}`;
+      }
+      
+      console.log('🔍 CrudManager - Loading data from:', endpoint);
       const response = await fetch(endpoint);
+      console.log('📡 CrudManager - Response status:', response.status);
+      
       if (response.ok) {
         const result = await response.json();
+        console.log('📦 CrudManager - Raw result:', result);
+        
         // Support { data: [...] } ou tableau direct
         if (Array.isArray(result)) {
           setData(result);
+          console.log('✅ CrudManager - Set data (array):', result.length, 'items');
         } else if (result?.data) {
-          setData(Array.isArray(result.data) ? result.data : [result.data]);
+          const dataArray = Array.isArray(result.data) ? result.data : [result.data];
+          setData(dataArray);
+          console.log('✅ CrudManager - Set data (result.data):', dataArray.length, 'items');
         } else if (result?.doc) {
           setData([result.doc]);
+          console.log('✅ CrudManager - Set data (result.doc): 1 item');
         } else {
           setData([]);
+          console.warn('⚠️ CrudManager - No data found in result');
         }
       } else {
         setData([]);
+        console.error('❌ CrudManager - Failed to load data, status:', response.status);
       }
     } catch (error) {
-      console.error('Error loading data:', error);
+      console.error('❌ CrudManager - Error loading data:', error);
       setData([]);
     } finally {
       setLoading(false);
@@ -145,8 +162,18 @@ export default function CrudManager<T extends { _id?: string; name?: string }>({
 
   const handleSave = async (formData: T) => {
     try {
-      const isEdit = Boolean(formData._id);
-      const endpoint = isEdit ? `${apiEndpoint}/${formData._id}` : apiEndpoint; // PUT /:id ou POST
+      const isEdit = Boolean(formData._id) || options.singleEntity;
+      
+      // Construire l'endpoint avec le locale si nécessaire
+      let endpoint = apiEndpoint;
+      if (options.singleEntity && locale) {
+        // Pour les entités uniques avec locale, utiliser PUT /api/admin/archbishop/:locale
+        endpoint = `${apiEndpoint}/${locale}`;
+      } else if (isEdit && formData._id) {
+        // Pour les entités multiples, utiliser PUT /api/endpoint/:id
+        endpoint = `${apiEndpoint}/${formData._id}`;
+      }
+      
       const method = isEdit ? 'PUT' : 'POST';
       
       const response = await fetch(endpoint, {
@@ -229,23 +256,70 @@ export default function CrudManager<T extends { _id?: string; name?: string }>({
         <>
           <div className="mb-6">
             <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              Gestion des {title}
+              {title}
             </h1>
             <p className="text-gray-600 mt-2">
-              Créez, modifiez et supprimez les {title.toLowerCase()}.
+              {options.singleEntity 
+                ? `Gérez les informations de ${title.toLowerCase()}.`
+                : `Créez, modifiez et supprimez les ${title.toLowerCase()}.`
+              }
             </p>
           </div>
 
-          <DataTable
-            title={title}
-            data={data}
-            columns={columns}
-            actions={tableActions}
-            onAdd={options.hideCreateButton ? undefined : handleCreate}
-            loading={loading}
-            emptyMessage={defaultMessages.emptyMessage}
-            addButtonLabel={`Créer un ${title.toLowerCase()}`}
-          />
+          {/* Pour une entité unique, afficher un bouton d'édition direct si des données existent */}
+          {options.singleEntity && data.length > 0 && (
+            <div className="mb-6">
+              <button
+                onClick={() => handleEdit(data[0])}
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                Modifier les informations
+              </button>
+            </div>
+          )}
+
+          {/* Pour une entité unique sans données, afficher un message et un bouton de création */}
+          {options.singleEntity && data.length === 0 && (
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
+              <p className="text-blue-900 mb-4">
+                {defaultMessages.emptyMessage}
+              </p>
+              {/* Pour une entité unique, toujours afficher un bouton pour ajouter/modifier */}
+              <button
+                onClick={handleCreate}
+                className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+              >
+                Ajouter les informations
+              </button>
+            </div>
+          )}
+
+          {/* Afficher le tableau seulement si ce n'est pas une entité unique */}
+          {!options.singleEntity && (
+            <DataTable
+              title={title}
+              data={data}
+              columns={columns}
+              actions={tableActions}
+              onAdd={options.hideCreateButton ? undefined : handleCreate}
+              loading={loading}
+              emptyMessage={defaultMessages.emptyMessage}
+              addButtonLabel={`Créer un ${title.toLowerCase()}`}
+            />
+          )}
+
+          {/* Pour les entités uniques, afficher un tableau simplifié en lecture seule */}
+          {options.singleEntity && data.length > 0 && (
+            <DataTable
+              title={title}
+              data={data}
+              columns={columns}
+              actions={tableActions}
+              onAdd={undefined}
+              loading={loading}
+              emptyMessage={defaultMessages.emptyMessage}
+            />
+          )}
         </>
       )}
 
