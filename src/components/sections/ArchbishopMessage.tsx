@@ -1,11 +1,20 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BookOpen, GraduationCap, Award, ChevronDown, ChevronUp } from "lucide-react";
 
 type Props = { locale: string };
 
+interface ArchbishopData {
+  name: string;
+  title: string;
+  description: string;
+  portraitUrl: string;
+  publications: string[];
+  bibliographyRich?: string;
+}
+
 export default function ArchbishopMessage({ locale }: Props) {
-  const [activeTab, setActiveTab] = useState<"description" | "biographie" | "publications">("description");
+  const [activeTab, setActiveTab] = useState<"description" | "biographie" | "publications" | null>(null);
   const [expandedSections, setExpandedSections] = useState<{ [key: string]: boolean }>({
     primaire: false,
     secondaire: false,
@@ -13,31 +22,55 @@ export default function ArchbishopMessage({ locale }: Props) {
     parcours: false,
     distinctions: false
   });
+  const [archbishopData, setArchbishopData] = useState<ArchbishopData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArchbishopData = async () => {
+      try {
+        const response = await fetch(`/api/archbishop/${locale}`);
+        if (response.ok) {
+          const result = await response.json();
+          if (result.success && result.data) {
+            setArchbishopData(result.data);
+          }
+        }
+      } catch (error) {
+        console.error('Erreur lors du chargement des données de l\'archevêque:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArchbishopData();
+  }, [locale]);
 
   const toggleSection = (section: string) => {
     setExpandedSections(prev => ({ ...prev, [section]: !prev[section] }));
   };
 
-  const publications = [
-    "L'art oratoire et son pouvoir en Afrique, Publications Saint-Paul, Yaoundé, 1997.",
-    "L'Afrique humaine, Ed. Groupe éthique, Yaoundé, 2005.",
-    "« l'Évangile et vos valeurs traditionnelles africaines » in Percorsi culturali, 2005, Urbaniana University Press",
-    "« Les conséquences éthiques sur la personne humaine d'une mondialisation sans Dieu » in Percorsi culturali, 2009, Urbaniana University Press",
-    "Dons de vie, Ed. Groupe éthique, Ebolowa, 2011.",
-    "Il nous a parlé par les prophètes Ed. Archidiocèse de Yaoundé, 2015.",
-    "Ainsi parle le Seigneur, Ed. Archidiocèse de Yaoundé, 2015.",
-    "Pour toujours ta parole, Ed. Archidiocèse de Yaoundé, 2016.",
-    "Paroles d'espérance, Ed. Archidiocèse de Yaoundé, 2016.",
-    "Paroles de salut, Ed. Archidiocèse de Yaoundé, Yaoundé, 2018.",
-    "Selon ta parole, Ed. Archidiocèse de Yaoundé, 2019.",
-    "La Nouvelle École africaine : structuration et pertinence pour une Afrique nouvelle, Éd. Nleb Bekristen, 2021.",
-    "L'université Catholique d'Afrique Centrale : l'auréole de son œuvre, PUCAC, Yaoundé, 2021.",
-    "Saint Joseph Notre Protecteur, Ed. Archidiocèse de Yaoundé, 2021.",
-    "Paroles de salut, Ed. Archidiocèse de Yaoundé, 2021.",
-    "Source de vie, Ed. Archidiocèse de Yaoundé, 2023.",
-    "Le Savoir-vivre ensemble. Vers une humanité plus humaine, P.U.C.A.C, 2023",
-    "L'Année de Prière 2024. Année en Prière, Message de Carême 2024, Ed. Les Presses Offsets, 2024"
-  ];
+  // Données par défaut si l'API ne répond pas
+  const defaultData = {
+    name: "Mgr Jean MBARGA",
+    title: "Archevêque Métropolitain de Yaoundé",
+    description: "Pasteur dévoué et théologien reconnu...",
+    portraitUrl: "/images/archbishop.jpg",
+    publications: []
+  };
+
+  const data = archbishopData || defaultData;
+
+  if (loading) {
+    return (
+      <section className="bg-gradient-to-b from-white to-neutral-50">
+        <div className="container mx-auto px-4 py-8 md:py-12">
+          <div className="text-center">
+            <p className="text-gray-600">Chargement...</p>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="bg-gradient-to-b from-white to-neutral-50">
@@ -49,17 +82,18 @@ export default function ArchbishopMessage({ locale }: Props) {
             <div className="sticky top-24">
               <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden shadow-xl border-4 border-white">
                 <img
-                  src="/images/archbishop.jpg"
-                  alt="Mgr Jean Mbarga - Archevêque de Yaoundé"
+                  src={data.portraitUrl}
+                  alt={`${data.name} - ${data.title}`}
                   className="w-full h-full object-cover"
                 />
               </div>
+              {/* Nom et titre toujours affichés sous la photo */}
               <div className="mt-4 text-center">
                 <h2 className="text-2xl md:text-3xl font-bold text-neutral-900">
-                  Mgr Jean MBARGA
+                  {data.name}
                 </h2>
                 <p className="text-lg text-[#BE2722] font-semibold mt-1">
-                  Archevêque Métropolitain de Yaoundé
+                  {data.title}
                 </p>
               </div>
             </div>
@@ -105,14 +139,31 @@ export default function ArchbishopMessage({ locale }: Props) {
             </div>
 
             {/* Contenu des onglets */}
+            {activeTab === null && (
+              <div className="bg-white rounded-lg shadow-md border border-neutral-200 p-8">
+                <div className="text-center">
+                  <div className="max-w-2xl mx-auto">
+                    <p className="text-lg text-neutral-600 italic mb-3">
+                      « Ut Vitam habeant et abundantius habeant »
+                    </p>
+                    <p className="text-base text-neutral-500 mb-6">
+                      « afin qu'ils aient la vie et qu'ils l'aient en abondance » (Jn 10,10)
+                    </p>
+                  </div>
+                  <p className="text-neutral-600 mt-6">
+                    Sélectionnez un onglet ci-dessus pour en savoir plus sur l'Archevêque.
+                  </p>
+                </div>
+              </div>
+            )}
             {activeTab === "description" && (
               <div className="bg-white rounded-lg shadow-md border border-neutral-200 p-8">
                 <div className="text-center mb-8">
                   <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
-                    Mgr Jean MBARGA
+                    {data.name}
                   </h2>
                   <p className="text-xl text-[#BE2722] font-semibold mb-6">
-                    Archevêque Métropolitain de Yaoundé
+                    {data.title}
                   </p>
                   <div className="max-w-2xl mx-auto">
                     <p className="text-lg text-neutral-600 italic mb-3">
@@ -125,18 +176,11 @@ export default function ArchbishopMessage({ locale }: Props) {
                 </div>
 
                 <div className="prose prose-lg max-w-none text-neutral-700 leading-relaxed">
-                  <p className="text-justify mb-4">
-                    Pasteur dévoué et théologien reconnu, Monseigneur Jean MBARGA guide l'Archidiocèse de Yaoundé depuis 2014 avec sagesse et engagement. Son parcours exceptionnel témoigne d'une vie consacrée au service de l'Église et à l'épanouissement spirituel des fidèles.
-                  </p>
-                  <p className="text-justify mb-4">
-                    Docteur en Théologie Morale et titulaire d'une Maîtrise en Droit Canonique, il a marqué l'Église camerounaise par ses responsabilités successives : Recteur du Grand Séminaire de Nkolbisson, Évêque d'Ébolowa-Kribi, et aujourd'hui Archevêque Métropolitain de Yaoundé.
-                  </p>
-                  <p className="text-justify mb-4">
-                    Sa vision pastorale se caractérise par une attention particulière portée à la formation des fidèles, à l'inculturation de la foi et au dialogue entre l'Évangile et les réalités africaines contemporaines. Grand Chancelier de l'Université Catholique d'Afrique Centrale (UCAC) et fondateur de l'Institut Universitaire Catholique Sainte Thérèse de Yaoundé (INUCASTY), il œuvre inlassablement pour l'éducation et la formation intégrale de la jeunesse.
-                  </p>
-                  <p className="text-justify">
-                    Auteur prolifique, Monseigneur MBARGA a publié de nombreux ouvrages qui enrichissent la réflexion théologique et spirituelle en Afrique. Sa devise épiscopale, tirée de l'Évangile selon Saint Jean, résume sa mission : permettre à chacun d'avoir la vie en abondance.
-                  </p>
+                  {data.description.split('\n\n').map((paragraph, index) => (
+                    <p key={index} className="text-justify mb-4">
+                      {paragraph}
+                    </p>
+                  ))}
                 </div>
 
                 <div className="mt-8 pt-6 border-t border-neutral-200">
@@ -309,11 +353,11 @@ export default function ArchbishopMessage({ locale }: Props) {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold text-neutral-900">Publications</h3>
-                    <p className="text-sm text-neutral-600">{publications.length} ouvrages et articles</p>
+                    <p className="text-sm text-neutral-600">{data.publications.length} ouvrages et articles</p>
                   </div>
                 </div>
                 <div className="space-y-3">
-                  {publications.map((pub, index) => (
+                  {data.publications.map((pub, index) => (
                     <div
                       key={index}
                       className="flex gap-3 p-3 rounded-lg hover:bg-neutral-50 transition-colors border border-neutral-100"
@@ -328,12 +372,6 @@ export default function ArchbishopMessage({ locale }: Props) {
               </div>
             )}
 
-            {/* Note galerie */}
-            <div className="mt-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-              <p className="text-sm text-blue-800">
-                <strong>Note :</strong> La galerie photo sera enrichie prochainement.
-              </p>
-            </div>
           </div>
         </div>
       </div>

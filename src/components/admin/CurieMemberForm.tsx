@@ -94,22 +94,17 @@ export default function CurieMemberForm({
           <label className="block text-sm font-medium text-gray-700 mb-2">
             Rôle *
           </label>
-          <select
+          <input
+            type="text"
             value={formData.role || ''}
             onChange={(e) => handleChange('role', e.target.value)}
             className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            placeholder="Ex: Vicaire Général, Chancelier, etc."
             required
-          >
-            <option value="">Sélectionner un rôle</option>
-            <option value="ARCHEVÊQUE MÉTROPOLITAIN">Archevêque Métropolitain</option>
-            <option value="VICAIRE GÉNÉRAL">Vicaire Général</option>
-            <option value="CHANCELIER">Chancelier</option>
-            <option value="ÉCONOME DIOCÉSAIN">Économe Diocésain</option>
-            <option value="SECRÉTAIRE GÉNÉRAL">Secrétaire Général</option>
-            <option value="DIRECTEUR DES ŒUVRES">Directeur des Œuvres</option>
-            <option value="VICAIRE ÉPISCOPAL">Vicaire Épiscopal</option>
-            <option value="MEMBRE DE LA CURIE">Membre de la Curie</option>
-          </select>
+          />
+          <p className="mt-1 text-xs text-gray-500">
+            Exemples: Archevêque Métropolitain, Vicaire Général, Chancelier, Économe Diocésain
+          </p>
         </div>
 
         {/* Sous-titre */}

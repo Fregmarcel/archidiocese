@@ -1,203 +1,257 @@
 "use client";
+import { useEffect, useState } from "react";
+import { 
+  Calendar, 
+  Users, 
+  Church, 
+  MapPin, 
+  Globe, 
+  TrendingUp,
+  BookOpen,
+  Award,
+  Building
+} from "lucide-react";
 
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
-import { motion } from 'framer-motion';
-
-interface HistoryEvent {
-  id: string;
-  year: number;
-  title: string;
-  description: string;
-  image: string;
-  category: string;
+interface HistoryData {
+  missionPresence: string;
+  apostolicVicariate: string;
+  archdiocesisErection: string;
+  baptizedCatholics: number;
+  nonCatholicChristians: number;
+  muslims: number;
+  totalPopulation: number;
+  diocesanPriests: number;
+  catechists: number;
+  geographicSituation: string;
+  strategicSituation: string;
+  spokenLanguages: string;
+  migrationIssue: string;
+  landHeritage: string;
+  infrastructures: string;
+  conclusion: string;
 }
 
-const categoryColors = {
-  creation: 'bg-green-500',
-  construction: 'bg-blue-500', 
-  nomination: 'bg-purple-500',
-  modernisation: 'bg-red-500',
-  other: 'bg-gray-500'
-};
-
-export default function Historique() {
-  const [historyEvents, setHistoryEvents] = useState<HistoryEvent[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+export default function HistoriquePage({ params }: { params: Promise<{ locale: string }> }) {
+  const [historyData, setHistoryData] = useState<HistoryData | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [locale, setLocale] = useState<string>("");
 
   useEffect(() => {
-    const fetchHistoryEvents = async () => {
+    params.then(p => setLocale(p.locale));
+  }, [params]);
+
+  useEffect(() => {
+    if (!locale) return;
+    
+    const fetchHistoryData = async () => {
       try {
-        const response = await fetch('/api/history-events');
-        const data = await response.json();
-        if (data.success && Array.isArray(data.data)) {
-          setHistoryEvents(data.data);
-        } else {
-          setHistoryEvents([]);
+        const response = await fetch(`/api/admin/history/${locale}`);
+        if (response.ok) {
+          const result = await response.json();
+          if (result.doc) {
+            setHistoryData(result.doc);
+          }
         }
       } catch (error) {
-        console.error('Erreur lors du chargement:', error);
-        setHistoryEvents([]);
+        console.error('Erreur lors du chargement des données historiques:', error);
       } finally {
-        setIsLoading(false);
+        setLoading(false);
       }
     };
 
-    fetchHistoryEvents();
-  }, []);
+    fetchHistoryData();
+  }, [locale]);
 
-  if (isLoading) {
+  if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 py-12">
-        <div className="container mx-auto px-4 text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#BE2722]"></div>
-          <p className="mt-4 text-neutral-600">Chargement de l'historique...</p>
+      <div className="min-h-screen bg-gradient-to-b from-white to-neutral-50">
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center">
+            <p className="text-gray-600">Chargement...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!historyData) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-white to-neutral-50">
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center">
+            <p className="text-gray-600">Aucune donnée disponible</p>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <section className="bg-white py-16">
+    <div className="min-h-screen bg-gradient-to-b from-white to-neutral-50">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-[#BE2722] to-[#9d1f1b] text-white py-16">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-[#25282E] mb-4">
-              Notre Historique
-            </h1>
-            <p className="text-lg text-neutral-600 max-w-3xl mx-auto">
-              Découvrez les moments marquants qui ont façonné l'Archidiocèse de Yaoundé depuis sa création.
-            </p>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            L'Archidiocèse de Yaoundé
+          </h1>
+          <p className="text-xl md:text-2xl opacity-90">
+            Ses Ressources, Ses Défis et Son Plan Pastoral
+          </p>
+        </div>
+      </div>
+
+      {/* Section I - Présentation Générale */}
+      <section className="container mx-auto px-4 py-12">
+        <h2 className="text-3xl font-bold text-neutral-900 mb-8">
+          Présentation Générale
+        </h2>
+
+        {/* Dates clés */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-[#BE2722]">
+            <Calendar className="w-12 h-12 text-[#BE2722] mb-4" />
+            <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+              Présence missionnaire
+            </h3>
+            <p className="text-3xl font-bold text-[#BE2722]">{historyData.missionPresence}</p>
+          </div>
+          <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-[#BE2722]">
+            <Church className="w-12 h-12 text-[#BE2722] mb-4" />
+            <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+              Vicariat Apostolique
+            </h3>
+            <p className="text-3xl font-bold text-[#BE2722]">{historyData.apostolicVicariate}</p>
+          </div>
+          <div className="bg-white rounded-lg shadow-md p-6 border-t-4 border-[#BE2722]">
+            <Award className="w-12 h-12 text-[#BE2722] mb-4" />
+            <h3 className="text-lg font-semibold text-neutral-900 mb-2">
+              Érection en Archidiocèse
+            </h3>
+            <p className="text-2xl font-bold text-[#BE2722]">{historyData.archdiocesisErection}</p>
           </div>
         </div>
-      </section>
 
-      {/* Empty state when no data */}
-      {historyEvents.length === 0 && (
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto bg-white border border-gray-200 rounded-2xl p-10 text-center">
-              <div className="mx-auto w-16 h-16 rounded-full bg-[#BE2722]/10 text-[#BE2722] grid place-items-center mb-4">
-                <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M8 21h8" />
-                  <path d="M12 17v4" />
-                  <path d="M7 8v5a5 5 0 0 0 10 0V8" />
-                  <path d="M5 8h14" />
-                  <path d="M8 12h8" />
-                  <path d="M7 8V7a5 5 0 1 1 10 0v1" />
-                </svg>
-              </div>
-              <h2 className="text-2xl font-bold text-[#25282E]">Historique en cours de construction</h2>
-              <p className="text-neutral-600 mt-2">Aucun évènement n'est encore disponible. Revenez bientôt ou abonnez‑vous à notre newsletter pour être informé des mises à jour.</p>
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Timeline */}
-      {historyEvents.length > 0 && (
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-center mb-12 text-[#25282E]">
-              Chronologie des Événements Marquants
-            </h2>
-
-            <div className="space-y-12">
-              {historyEvents.map((event, index) => (
-                <motion.div
-                  key={event.id}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
-                >
-                  <div className="md:flex">
-                    <div className="md:w-1/2">
-                      <div className="relative h-64 md:h-80">
-                        <Image
-                          src={event.image}
-                          alt={event.title}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    </div>
-                    <div className="md:w-1/2 p-6 md:p-8 flex flex-col justify-center">
-                      <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full text-white font-bold text-xl mb-4 ${
-                        (categoryColors as any)[event.category] || categoryColors.other
-                      }`}>
-                        {event.year}
-                      </div>
-                      <h3 className="text-2xl md:text-3xl font-bold text-[#25282E] mb-4">
-                        {event.title}
-                      </h3>
-                      <p className="text-neutral-600 leading-relaxed text-lg">
-                        {event.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* Gallery Section */}
-      {historyEvents.length > 0 && (
-        <section className="bg-white py-16">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-bold text-[#25282E] mb-4">
-                Galerie Historique
-              </h2>
-              <p className="text-neutral-600 max-w-2xl mx-auto">
-                Une sélection d'images qui racontent l'histoire de notre Archidiocèse
+        {/* Statistiques */}
+        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+          <h3 className="text-2xl font-bold text-neutral-900 mb-6">
+            Données Sociodémographiques
+          </h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            <div className="text-center">
+              <Users className="w-10 h-10 text-[#BE2722] mx-auto mb-2" />
+              <p className="text-3xl font-bold text-neutral-900">
+                {historyData.baptizedCatholics.toLocaleString()}
               </p>
+              <p className="text-sm text-neutral-600">Catholiques baptisés</p>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {historyEvents.slice(0, 6).map((event, index) => (
-                <motion.div
-                  key={`gallery-${event.id}`}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="group cursor-pointer"
-                >
-                  <div className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
-                    <div className="relative h-48 overflow-hidden">
-                      <Image
-                        src={event.image}
-                        alt={event.title}
-                        fill
-                        className="object-cover transition-transform duration-500 group-hover:scale-110"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className={`inline-block w-3 h-3 rounded-full ${
-                          (categoryColors as any)[event.category] || categoryColors.other
-                        }`}></span>
-                        <span className="text-sm font-semibold text-neutral-600">{event.year}</span>
-                      </div>
-                      <h4 className="font-semibold text-[#25282E] text-sm mb-1">
-                        {event.title}
-                      </h4>
-                      <p className="text-xs text-neutral-600 line-clamp-2">
-                        {event.description}
-                      </p>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
+            <div className="text-center">
+              <Users className="w-10 h-10 text-neutral-600 mx-auto mb-2" />
+              <p className="text-3xl font-bold text-neutral-900">
+                {historyData.nonCatholicChristians.toLocaleString()}
+              </p>
+              <p className="text-sm text-neutral-600">Chrétiens non-catholiques</p>
+            </div>
+            <div className="text-center">
+              <Users className="w-10 h-10 text-neutral-600 mx-auto mb-2" />
+              <p className="text-3xl font-bold text-neutral-900">
+                {historyData.muslims.toLocaleString()}
+              </p>
+              <p className="text-sm text-neutral-600">Musulmans</p>
+            </div>
+            <div className="text-center">
+              <TrendingUp className="w-10 h-10 text-[#2E9B51] mx-auto mb-2" />
+              <p className="text-3xl font-bold text-neutral-900">
+                {historyData.totalPopulation.toLocaleString()}
+              </p>
+              <p className="text-sm text-neutral-600">Population totale</p>
             </div>
           </div>
-        </section>
-      )}
+        </div>
+
+        {/* Présence missionnaire */}
+        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+          <h3 className="text-2xl font-bold text-neutral-900 mb-6">
+            Présence Missionnaire
+          </h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="flex items-center gap-4 p-4 bg-neutral-50 rounded-lg">
+              <Church className="w-12 h-12 text-[#BE2722]" />
+              <div>
+                <p className="text-2xl font-bold text-neutral-900">{historyData.diocesanPriests}</p>
+                <p className="text-sm text-neutral-600">Prêtres diocésains</p>
+              </div>
+            </div>
+            <div className="flex items-center gap-4 p-4 bg-neutral-50 rounded-lg">
+              <BookOpen className="w-12 h-12 text-[#BE2722]" />
+              <div>
+                <p className="text-2xl font-bold text-neutral-900">{historyData.catechists.toLocaleString()}</p>
+                <p className="text-sm text-neutral-600">Catéchistes</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Situation géographique */}
+        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <MapPin className="w-8 h-8 text-[#BE2722]" />
+            <h3 className="text-2xl font-bold text-neutral-900">Situation Géographique</h3>
+          </div>
+          <p className="text-neutral-700 leading-relaxed">{historyData.geographicSituation}</p>
+        </div>
+
+        {/* Situation stratégique */}
+        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <Building className="w-8 h-8 text-[#BE2722]" />
+            <h3 className="text-2xl font-bold text-neutral-900">Situation Stratégique</h3>
+          </div>
+          <p className="text-neutral-700 leading-relaxed">{historyData.strategicSituation}</p>
+        </div>
+
+        {/* Langues parlées */}
+        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <Globe className="w-8 h-8 text-[#BE2722]" />
+            <h3 className="text-2xl font-bold text-neutral-900">Langues Parlées</h3>
+          </div>
+          <p className="text-neutral-700 leading-relaxed">{historyData.spokenLanguages}</p>
+        </div>
+
+        {/* Question migratoire */}
+        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+          <div className="flex items-center gap-3 mb-4">
+            <TrendingUp className="w-8 h-8 text-[#BE2722]" />
+            <h3 className="text-2xl font-bold text-neutral-900">Question Migratoire</h3>
+          </div>
+          <p className="text-neutral-700 leading-relaxed">{historyData.migrationIssue}</p>
+        </div>
+
+        {/* Patrimoine */}
+        <div className="bg-white rounded-lg shadow-md p-8 mb-8">
+          <h3 className="text-2xl font-bold text-neutral-900 mb-6">Le Patrimoine</h3>
+          <div className="space-y-4">
+            <div>
+              <h4 className="text-lg font-semibold text-neutral-900 mb-2">Foncier</h4>
+              <p className="text-neutral-700">{historyData.landHeritage}</p>
+            </div>
+            <div>
+              <h4 className="text-lg font-semibold text-neutral-900 mb-2">Infrastructurel</h4>
+              <p className="text-neutral-700">{historyData.infrastructures}</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Conclusion */}
+        {historyData.conclusion && (
+          <div className="bg-gradient-to-r from-[#BE2722]/5 to-[#2E9B51]/5 rounded-lg shadow-md p-8">
+            <h3 className="text-2xl font-bold text-neutral-900 mb-4">Conclusion</h3>
+            <p className="text-neutral-700 leading-relaxed italic text-lg">
+              {historyData.conclusion}
+            </p>
+          </div>
+        )}
+      </section>
     </div>
   );
 }

@@ -9,7 +9,7 @@ export default async function SediPage({ params }: { params: Promise<{ locale: s
         {/* Title */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-[#25282E]">LE SEDI</h1>
+            <h1 className="text-2xl md:text-3xl font-extrabold text-[#25282E]">LE SEDY</h1>
             <p className="text-sm text-neutral-600">
               Service Diocésain de l’Information (structure et activités)
             </p>
@@ -22,7 +22,7 @@ export default async function SediPage({ params }: { params: Promise<{ locale: s
             {/* Présentation */}
             <div className="border border-neutral-200 rounded bg-white">
               <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-200">
-                <h2 className="text-base md:text-lg font-extrabold text-[#0F172A]">Présentation du SEDI</h2>
+                <h2 className="text-base md:text-lg font-extrabold text-[#0F172A]">Présentation du SEDY</h2>
                 <button aria-label="Editer" className="text-neutral-500 hover:text-[#BE2722]">
                   {/* pencil icon */}
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -32,7 +32,7 @@ export default async function SediPage({ params }: { params: Promise<{ locale: s
                 </button>
               </div>
               <div className="px-4 py-4">
-                <h2 className="text-base md:text-lg font-extrabold text-[#0F172A]">Présentation du SEDI</h2>
+                <h2 className="text-base md:text-lg font-extrabold text-[#0F172A]">Présentation du SEDY</h2>
                 <button aria-label="Editer" className="text-neutral-500 hover:text-[#BE2722]">
                   {/* pencil icon */}
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 113 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
@@ -40,7 +40,7 @@ export default async function SediPage({ params }: { params: Promise<{ locale: s
               </div>
               <div className="px-4 py-4">
                 <p className="text-sm leading-6 text-neutral-700">
-                  Le Service Diocésain de l’Information (SEDI) est chargé de la communication interne et externe de
+                  Le Service Diocésain de l’Information (SEDY) est chargé de la communication interne et externe de
                   l’Archidiocèse de Yaoundé. Il coordonne la production des contenus (textuels, photos, vidéos,
                   multimédias) et facilite la diffusion auprès des fidèles, des partenaires et du grand public.
                 </p>
@@ -50,7 +50,7 @@ export default async function SediPage({ params }: { params: Promise<{ locale: s
             {/* Actualités */}
             <div className="border border-neutral-200 rounded bg-white">
               <div className="px-4 py-3 border-b border-neutral-200">
-                <h2 className="text-base md:text-lg font-extrabold text-[#0F172A]">Actualités SEDI</h2>
+                <h2 className="text-base md:text-lg font-extrabold text-[#0F172A]">Actualités SEDY</h2>
                 <p className="text-xs text-neutral-500">Images, vidéos, PDF, interviews</p>
               </div>
               <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -61,7 +61,7 @@ export default async function SediPage({ params }: { params: Promise<{ locale: s
                       <h3 className="text-sm font-semibold text-[#0F172A]">Titre de l’actualité {i}</h3>
                       <p className="text-xs text-neutral-600 line-clamp-2">Bref descriptif de l’actualité {i} pour voir les ressources…</p>
                       <div className="flex flex-wrap gap-2">
-                        {['SEDI','Actu','Média'].map((t) => (
+                        {['SEDY','Actu','Média'].map((t) => (
                           <span key={t} className="px-2 py-0.5 text-[11px] rounded border border-neutral-300 text-neutral-600">{t}</span>
                         ))}
                       </div>
@@ -74,7 +74,7 @@ export default async function SediPage({ params }: { params: Promise<{ locale: s
             {/* Équipe SEDI */}
             <div className="border border-neutral-200 rounded bg-white">
               <div className="px-4 py-3 border-b border-neutral-200">
-                <h2 className="text-base md:text-lg font-extrabold text-[#0F172A]">Équipe SEDI</h2>
+                <h2 className="text-base md:text-lg font-extrabold text-[#0F172A]">Équipe SEDY</h2>
               </div>
               <div className="p-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 {[1,2,3,4].map((i) => (
@@ -82,7 +82,7 @@ export default async function SediPage({ params }: { params: Promise<{ locale: s
                     <div className="w-12 h-12 rounded bg-neutral-200" />
                     <div>
                       <p className="text-sm font-semibold text-[#0F172A]">Nom Prénom</p>
-                      <p className="text-xs text-neutral-600">Fonction au SEDI</p>
+                      <p className="text-xs text-neutral-600">Fonction au SEDY</p>
                     </div>
                   </div>
                 ))}

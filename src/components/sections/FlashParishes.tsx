@@ -147,7 +147,7 @@ export default function FlashParishes({ locale }: Props) {
             { title: 'Les paroisses', src: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=1200&auto=format&fit=crop' },
             { title: 'Les services diocésains', src: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=1200&auto=format&fit=crop' },
             { title: 'Les commissions diocésaines', src: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1200&auto=format&fit=crop' },
-            { title: 'Le SEDI', src: 'https://images.unsplash.com/photo-1491308056676-205b7c9a7dc1?q=80&w=1200&auto=format&fit=crop' },
+            { title: 'Le SEDY', src: 'https://images.unsplash.com/photo-1491308056676-205b7c9a7dc1?q=80&w=1200&auto=format&fit=crop' },
             { title: 'Aumônerie diocésaine', src: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1200&auto=format&fit=crop' },
             { title: 'Universités – Grandes écoles', src: 'https://images.unsplash.com/photo-1491553895911-0055eca6402d?q=80&w=1200&auto=format&fit=crop' },
             { title: 'Instituts religieux', src: 'https://images.unsplash.com/photo-1527960471264-932f39eb5840?q=80&w=1200&auto=format&fit=crop' },
@@ -159,7 +159,7 @@ export default function FlashParishes({ locale }: Props) {
               href = `/${locale}/zones-pastorales`;
             } else if (p.title === 'Les commissions diocésaines') {
               href = `/${locale}/commissions-diocesaines`;
-            } else if (p.title === 'Le SEDI') {
+            } else if (p.title === 'Le SEDY') {
               href = `/${locale}/services-diocesains/sedi`;
             }
             return (

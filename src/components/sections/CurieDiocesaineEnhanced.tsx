@@ -134,7 +134,13 @@ export default function CurieDiocesaineEnhanced({ locale }: Props) {
           ) : (
             <>
               {/* Grid des membres */}
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-3 mb-12">
+              <div className={`grid gap-3 mb-12 ${
+                displayedMembers.length === 1 ? 'grid-cols-1 md:grid-cols-1 max-w-sm mx-auto' :
+                displayedMembers.length === 2 ? 'grid-cols-1 md:grid-cols-2 max-w-2xl mx-auto' :
+                displayedMembers.length === 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto' :
+                displayedMembers.length === 4 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto' :
+                'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
+              }`}>
             {displayedMembers.map((member) => (
               <div key={member.id} className="group cursor-pointer" onClick={() => openDetailModal(member)}>
                 <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 h-72">

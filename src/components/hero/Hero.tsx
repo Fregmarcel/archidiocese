@@ -19,12 +19,10 @@ type Slide = {
 };
 
 const SLIDES: Slide[] = [
-  { id: 1, src: 'https://images.unsplash.com/photo-1542810634-71277d95dcbb?q=80&w=1920&auto=format&fit=crop', alt: 'Slide 1', overlay: true },
-  { id: 2, src: 'https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=1920&auto=format&fit=crop', alt: 'Slide 2', overlay: true },
-  { id: 3, src: 'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=1920&auto=format&fit=crop', alt: 'Slide 3', overlay: true },
-  { id: 4, src: 'https://images.unsplash.com/photo-1492684223066-81342ee5ff30?q=80&w=1920&auto=format&fit=crop', alt: 'Slide 4' },
-  { id: 5, src: 'https://images.unsplash.com/photo-1491308056676-205b7c9a7dc1?q=80&w=1920&auto=format&fit=crop', alt: 'Slide 5' },
-  { id: 6, src: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?q=80&w=1920&auto=format&fit=crop', alt: 'Slide 6' },
+  { id: 1, src: '/c1.png', alt: 'Campus Archidiocèse', overlay: true },
+  { id: 2, src: '/c2.png', alt: 'Établissement Catholique', overlay: true },
+  { id: 3, src: '/c3.png', alt: 'Visite Pastorale', overlay: true },
+  { id: 4, src: '/c4.png', alt: 'Infrastructure Diocésaine', overlay: true },
 ];
 
 const viewportId = 'hero-viewport';

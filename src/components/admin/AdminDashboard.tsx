@@ -6,6 +6,7 @@ import ArchbishopForm from "./ArchbishopForm";
 import CrudManager from "./CrudManager";
 import { archbishopCrudConfig, ArchbishopData } from "./ArchbishopCrudConfig";
 import { curieMemberCrudConfig, CurieMemberData } from "./CurieCrudConfig";
+import { historyPageCrudConfig, HistoryPageData } from "./HistoryPageCrudConfig";
 import { pastoralZoneCrudConfig, PastoralZoneData } from './PastoralZoneCrudConfig';
 import { parishCrudConfig, ParishData } from './ParishCrudConfig';
 import { newsCrudConfig, NewsData } from './NewsCrudConfig';
@@ -21,10 +22,12 @@ interface AdminDashboardProps {
 
 type MainSection = "overview" | "accueil" | "historique" | "apropos" | "contact";
 type AccueilSubsection = "archbishop" | "curie" | "news" | "events" | "testimonials" | "partners" | "admissions" | "pastoralZones" | "parishes" | "radio" | "television";
+type HistoriqueSubsection = "historiquePage";
 
 export default function AdminDashboard({ locale }: AdminDashboardProps) {
   const [currentSection, setCurrentSection] = useState<MainSection>("overview");
   const [currentSubsection, setCurrentSubsection] = useState<AccueilSubsection | null>(null);
+  const [currentHistoriqueSubsection, setCurrentHistoriqueSubsection] = useState<HistoriqueSubsection | null>(null);
 
   const mainSections = [
     {
@@ -238,6 +241,35 @@ export default function AdminDashboard({ locale }: AdminDashboardProps) {
     </div>
   );
 
+  const renderHistoriqueSubsections = () => (
+    <div>
+      <div className="flex items-center mb-6">
+        <button
+          onClick={() => setCurrentSection("overview")}
+          className="mr-4 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Page Historique</h1>
+          <p className="text-gray-600">Gérez le contenu de la page historique de l'Archidiocèse.</p>
+        </div>
+      </div>
+
+      <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <CrudManager<HistoryPageData>
+          title={historyPageCrudConfig.title}
+          apiEndpoint={historyPageCrudConfig.apiEndpoint}
+          columns={historyPageCrudConfig.columns}
+          FormComponent={historyPageCrudConfig.FormComponent}
+          options={historyPageCrudConfig.options}
+          messages={historyPageCrudConfig.messages}
+          locale={locale}
+        />
+      </div>
+    </div>
+  );
+
   const renderSubsectionForm = () => {
     if (!currentSubsection) return null;
 
@@ -442,7 +474,9 @@ export default function AdminDashboard({ locale }: AdminDashboardProps) {
       
       {currentSection === "accueil" && currentSubsection && renderSubsectionForm()}
       
-      {currentSection !== "overview" && currentSection !== "accueil" && renderOtherSections()}
+      {currentSection === "historique" && renderHistoriqueSubsections()}
+      
+      {currentSection !== "overview" && currentSection !== "accueil" && currentSection !== "historique" && renderOtherSections()}
     </div>
   );
 }
