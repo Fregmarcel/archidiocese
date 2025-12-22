@@ -22,7 +22,7 @@ async function testConnection() {
     
     if (doc) {
       console.log('✅ Document trouvé:');
-      console.log(`   - ID: ${doc._id}`);
+      console.log(`   - ID: ${String(doc._id)}`);
       console.log(`   - Nom: ${doc.name}`);
       console.log(`   - Titre: ${doc.title}`);
       console.log(`   - Locale: ${doc.locale}`);
