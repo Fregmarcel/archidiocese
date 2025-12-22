@@ -20,7 +20,7 @@ async function testConnection() {
     console.log('\n📊 Test de findOne({ locale: "fr" })...');
     const doc = await Archbishop.findOne({ locale: 'fr' }).lean();
     
-    if (doc) {
+    if (doc && !Array.isArray(doc)) {
       console.log('✅ Document trouvé:');
       console.log(`   - ID: ${String(doc._id)}`);
       console.log(`   - Nom: ${doc.name}`);
