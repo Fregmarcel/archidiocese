@@ -8,9 +8,11 @@ export type HistoryPageData = {
   apostolicVicariate: string;
   archdiocesisErection: string;
   baptizedCatholics: number;
+  nonCatholicChristians: number;
+  muslims: number;
+  totalPopulation: number;
   diocesanPriests: number;
   catechists: number;
-  totalPopulation: number;
   geographicSituation: string;
   strategicSituation: string;
   spokenLanguages: string;

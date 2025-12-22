@@ -24,30 +24,31 @@ export type HistoryPageData = {
 };
 
 type Props = {
-  item: HistoryPageData | null;
-  onSave: (data: HistoryPageData) => Promise<void>;
+  locale?: string;
+  initialData?: HistoryPageData | null;
+  onSave: (data: HistoryPageData) => void;
   onCancel: () => void;
 };
 
-export default function HistoryPageForm({ item, onSave, onCancel }: Props) {
+export default function HistoryPageForm({ locale = 'fr', initialData, onSave, onCancel }: Props) {
   const [formData, setFormData] = useState<HistoryPageData>({
-    locale: item?.locale || "fr",
-    missionPresence: item?.missionPresence || "1890",
-    apostolicVicariate: item?.apostolicVicariate || "1931",
-    archdiocesisErection: item?.archdiocesisErection || "04 septembre 1955",
-    baptizedCatholics: item?.baptizedCatholics || 2371213,
-    nonCatholicChristians: item?.nonCatholicChristians || 656961,
-    muslims: item?.muslims || 122026,
-    totalPopulation: item?.totalPopulation || 4285042,
-    diocesanPriests: item?.diocesanPriests || 298,
-    catechists: item?.catechists || 3338,
-    geographicSituation: item?.geographicSituation || "",
-    strategicSituation: item?.strategicSituation || "",
-    spokenLanguages: item?.spokenLanguages || "",
-    migrationIssue: item?.migrationIssue || "",
-    landHeritage: item?.landHeritage || "",
-    infrastructures: item?.infrastructures || "",
-    conclusion: item?.conclusion || "",
+    locale: initialData?.locale || locale,
+    missionPresence: initialData?.missionPresence || "1890",
+    apostolicVicariate: initialData?.apostolicVicariate || "1931",
+    archdiocesisErection: initialData?.archdiocesisErection || "04 septembre 1955",
+    baptizedCatholics: initialData?.baptizedCatholics || 2371213,
+    nonCatholicChristians: initialData?.nonCatholicChristians || 656961,
+    muslims: initialData?.muslims || 122026,
+    totalPopulation: initialData?.totalPopulation || 4285042,
+    diocesanPriests: initialData?.diocesanPriests || 298,
+    catechists: initialData?.catechists || 3338,
+    geographicSituation: initialData?.geographicSituation || "",
+    strategicSituation: initialData?.strategicSituation || "",
+    spokenLanguages: initialData?.spokenLanguages || "",
+    migrationIssue: initialData?.migrationIssue || "",
+    landHeritage: initialData?.landHeritage || "",
+    infrastructures: initialData?.infrastructures || "",
+    conclusion: initialData?.conclusion || "",
   });
 
   const [saving, setSaving] = useState(false);
@@ -56,7 +57,7 @@ export default function HistoryPageForm({ item, onSave, onCancel }: Props) {
     e.preventDefault();
     setSaving(true);
     try {
-      await onSave(formData);
+      onSave(formData);
     } finally {
       setSaving(false);
     }
