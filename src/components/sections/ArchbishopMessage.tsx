@@ -102,39 +102,39 @@ export default function ArchbishopMessage({ locale }: Props) {
           {/* Contenu principal */}
           <div className="lg:col-span-2">
             {/* Onglets */}
-            <div className="flex gap-2 mb-6">
+            <div className="flex flex-col sm:flex-row gap-2 mb-6">
               <button
                 onClick={() => setActiveTab("description")}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                className={`flex items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
                   activeTab === "description"
                     ? "bg-[#BE2722] text-white shadow-md"
                     : "bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200"
                 }`}
               >
-                <Award className="w-5 h-5" />
-                Présentation
+                <Award className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>Présentation</span>
               </button>
               <button
                 onClick={() => setActiveTab("biographie")}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                className={`flex items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
                   activeTab === "biographie"
                     ? "bg-[#BE2722] text-white shadow-md"
                     : "bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200"
                 }`}
               >
-                <GraduationCap className="w-5 h-5" />
-                Biographie
+                <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>Biographie</span>
               </button>
               <button
                 onClick={() => setActiveTab("publications")}
-                className={`flex items-center gap-2 px-6 py-3 rounded-lg font-semibold transition-all ${
+                className={`flex items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
                   activeTab === "publications"
                     ? "bg-[#BE2722] text-white shadow-md"
                     : "bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200"
                 }`}
               >
-                <BookOpen className="w-5 h-5" />
-                Publications
+                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
+                <span>Publications</span>
               </button>
             </div>
 

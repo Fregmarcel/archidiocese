@@ -45,11 +45,26 @@ export default function HistoriquePage({ params }: { params: Promise<{ locale: s
     
     const fetchHistoryData = async () => {
       try {
-        const response = await fetch(`/api/admin/history/${locale}`);
+        const response = await fetch(`/api/history/${locale}`);
         if (response.ok) {
           const result = await response.json();
           if (result.doc) {
             setHistoryData(result.doc);
+            return;
+          }
+        } else {
+          console.error('API history response not OK:', response.status);
+        }
+
+        // Fallback: if no data for current locale, try French default
+        if (locale !== 'fr') {
+          const frResp = await fetch(`/api/history/fr`);
+          if (frResp.ok) {
+            const frResult = await frResp.json();
+            if (frResult.doc) {
+              setHistoryData(frResult.doc);
+              return;
+            }
           }
         }
       } catch (error) {
