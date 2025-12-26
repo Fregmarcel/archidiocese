@@ -285,7 +285,7 @@ export default function NewsCarousel({ locale }: Props) {
             </div>
           </div>
         )}
-        {/* CTA sous la section */}
+        {/* CTA sous la section - masqués temporairement
         <div className="mt-6 md:mt-8">
           <div className="max-w-3xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
             {[
@@ -299,6 +299,7 @@ export default function NewsCarousel({ locale }: Props) {
             ))}
           </div>
         </div>
+        */}
       </div>
 
       <NewsModal
