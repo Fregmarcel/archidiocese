@@ -75,106 +75,82 @@ export default function ArchbishopMessage({ locale }: Props) {
   return (
     <section className="bg-gradient-to-b from-white to-neutral-50">
       <div className="container mx-auto px-4 py-8 md:py-12">
-        {/* En-tête avec photo */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        {/* En-tête avec photo et présentation */}
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-8 lg:gap-12 mb-10">
           {/* Photo */}
-          <div className="lg:col-span-1">
-            <div className="sticky top-24">
-              <div className="relative w-full aspect-[3/4] rounded-lg overflow-hidden shadow-xl border-4 border-white">
-                <img
-                  src={data.portraitUrl}
-                  alt={`${data.name} - ${data.title}`}
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* Nom et titre toujours affichés sous la photo */}
-              <div className="mt-4 text-center">
-                <h2 className="text-2xl md:text-3xl font-bold text-neutral-900">
-                  {data.name}
-                </h2>
-                <p className="text-lg text-[#BE2722] font-semibold mt-1">
-                  {data.title}
-                </p>
-              </div>
+          <div className="flex-shrink-0">
+            <div className="relative w-72 md:w-80 aspect-[3/4] rounded-xl overflow-hidden shadow-2xl border-4 border-white ring-1 ring-neutral-200">
+              <img
+                src={data.portraitUrl}
+                alt={`${data.name} - ${data.title}`}
+                className="w-full h-full object-cover"
+              />
             </div>
           </div>
 
-          {/* Contenu principal */}
-          <div className="lg:col-span-2">
-            {/* Onglets */}
-            <div className="flex flex-col sm:flex-row gap-2 mb-6">
+          {/* Nom, titre encadré et devise */}
+          <div className="flex flex-col justify-center max-w-lg">
+            <div className="border-2 border-[#BE2722] rounded-xl p-6 md:p-8 bg-white shadow-lg">
+              <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-neutral-900 text-center">
+                {data.name}
+              </h2>
+              <p className="text-lg md:text-xl text-[#BE2722] font-semibold mt-3 text-center">
+                {data.title}
+              </p>
+              <div className="mt-5 pt-5 border-t border-neutral-200">
+                <p className="text-sm md:text-base text-neutral-600 italic text-center">
+                  « Ut Vitam habeant et abundantius habeant »
+                </p>
+                <p className="text-xs md:text-sm text-neutral-500 text-center mt-2">
+                  « afin qu'ils aient la vie et qu'ils l'aient en abondance » (Jn 10,10)
+                </p>
+              </div>
+            </div>
+            
+            {/* Onglets directement sous l'encadré */}
+            <div className="flex flex-wrap justify-center gap-2 mt-6">
               <button
                 onClick={() => setActiveTab("description")}
-                className={`flex items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold transition-all text-sm ${
                   activeTab === "description"
                     ? "bg-[#BE2722] text-white shadow-md"
                     : "bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200"
                 }`}
               >
-                <Award className="w-4 h-4 sm:w-5 sm:h-5" />
+                <Award className="w-4 h-4" />
                 <span>Présentation</span>
               </button>
               <button
                 onClick={() => setActiveTab("biographie")}
-                className={`flex items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold transition-all text-sm ${
                   activeTab === "biographie"
                     ? "bg-[#BE2722] text-white shadow-md"
                     : "bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200"
                 }`}
               >
-                <GraduationCap className="w-4 h-4 sm:w-5 sm:h-5" />
+                <GraduationCap className="w-4 h-4" />
                 <span>Biographie</span>
               </button>
               <button
                 onClick={() => setActiveTab("publications")}
-                className={`flex items-center justify-center gap-2 px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all text-sm sm:text-base ${
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold transition-all text-sm ${
                   activeTab === "publications"
                     ? "bg-[#BE2722] text-white shadow-md"
                     : "bg-white text-neutral-700 hover:bg-neutral-100 border border-neutral-200"
                 }`}
               >
-                <BookOpen className="w-4 h-4 sm:w-5 sm:h-5" />
+                <BookOpen className="w-4 h-4" />
                 <span>Publications</span>
               </button>
             </div>
+          </div>
+        </div>
 
-            {/* Contenu des onglets */}
-            {activeTab === null && (
-              <div className="bg-white rounded-lg shadow-md border border-neutral-200 p-8">
-                <div className="text-center">
-                  <div className="max-w-2xl mx-auto">
-                    <p className="text-lg text-neutral-600 italic mb-3">
-                      « Ut Vitam habeant et abundantius habeant »
-                    </p>
-                    <p className="text-base text-neutral-500 mb-6">
-                      « afin qu'ils aient la vie et qu'ils l'aient en abondance » (Jn 10,10)
-                    </p>
-                  </div>
-                  <p className="text-neutral-600 mt-6">
-                    Sélectionnez un onglet ci-dessus pour en savoir plus sur l'Archevêque.
-                  </p>
-                </div>
-              </div>
-            )}
+        {/* Contenu des onglets - centré (masqué par défaut) */}
+        {activeTab !== null && (
+        <div className="max-w-4xl mx-auto">
             {activeTab === "description" && (
               <div className="bg-white rounded-lg shadow-md border border-neutral-200 p-8">
-                <div className="text-center mb-8">
-                  <h2 className="text-3xl md:text-4xl font-bold text-neutral-900 mb-4">
-                    {data.name}
-                  </h2>
-                  <p className="text-xl text-[#BE2722] font-semibold mb-6">
-                    {data.title}
-                  </p>
-                  <div className="max-w-2xl mx-auto">
-                    <p className="text-lg text-neutral-600 italic mb-3">
-                      « Ut Vitam habeant et abundantius habeant »
-                    </p>
-                    <p className="text-base text-neutral-500">
-                      « afin qu'ils aient la vie et qu'ils l'aient en abondance » (Jn 10,10)
-                    </p>
-                  </div>
-                </div>
-
                 <div className="prose prose-lg max-w-none text-neutral-700 leading-relaxed">
                   {data.description.split('\n\n').map((paragraph, index) => (
                     <p key={index} className="text-justify mb-4">
@@ -372,8 +348,8 @@ export default function ArchbishopMessage({ locale }: Props) {
               </div>
             )}
 
-          </div>
         </div>
+        )}
       </div>
     </section>
   );

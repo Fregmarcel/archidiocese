@@ -13,13 +13,101 @@ type NavItem = {
   label: string;
   href?: string;
   children?: { label: string; href: string }[];
+  icon?: React.ReactNode;
+  color?: string;
 };
 
 const buildMobileNav = (l: L): NavItem[] => [
-  { label: l === "fr" ? "ACCUEIL" : "HOME", href: `/${l}` },
-  { label: l === "fr" ? "HISTORIQUE" : "HISTORY", href: `/${l}/historique` },
-  { label: l === "fr" ? "À PROPOS" : "ABOUT", href: `/${l}/a-propos` },
-  { label: l === "fr" ? "CONTACT" : "CONTACT", href: `/${l}/contact` },
+  { 
+    label: l === "fr" ? "ACCUEIL" : "HOME", 
+    href: `/${l}`,
+    color: "#BE2722",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+      </svg>
+    )
+  },
+  { 
+    label: l === "fr" ? "HISTORIQUE" : "HISTORY", 
+    href: `/${l}/historique`,
+    color: "#F59E0B",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M13 3c-4.97 0-9 4.03-9 9H1l3.89 3.89.07.14L9 12H6c0-3.87 3.13-7 7-7s7 3.13 7 7-3.13 7-7 7c-1.93 0-3.68-.79-4.94-2.06l-1.42 1.42C8.27 19.99 10.51 21 13 21c4.97 0 9-4.03 9-9s-4.03-9-9-9zm-1 5v5l4.28 2.54.72-1.21-3.5-2.08V8H12z"/>
+      </svg>
+    )
+  },
+  { 
+    label: l === "fr" ? "À PROPOS" : "ABOUT", 
+    href: `/${l}/a-propos`,
+    color: "#3B82F6",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+      </svg>
+    )
+  },
+  { 
+    label: l === "fr" ? "CONTACT" : "CONTACT", 
+    href: `/${l}/contact`,
+    color: "#10B981",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+      </svg>
+    )
+  },
+  { 
+    label: l === "fr" ? "ZONES PASTORALES" : "PASTORAL ZONES", 
+    href: `/${l}/zones-pastorales`,
+    color: "#8B5CF6",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+      </svg>
+    )
+  },
+  { 
+    label: l === "fr" ? "PAROISSES" : "PARISHES", 
+    href: `/${l}/paroisses`,
+    color: "#EC4899",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M18 12.22V9l-5-2.5V5h2V3h-2V1h-2v2H9v2h2v1.5L6 9v3.22L2 14v8h8v-4h4v4h8v-8l-4-1.78zM12 13.5c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/>
+      </svg>
+    )
+  },
+  { 
+    label: l === "fr" ? "ACTUALITÉS" : "NEWS", 
+    href: `/${l}/actualites`,
+    color: "#EF4444",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+      </svg>
+    )
+  },
+  { 
+    label: l === "fr" ? "AGENDA" : "EVENTS", 
+    href: `/${l}/agenda`,
+    color: "#06B6D4",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/>
+      </svg>
+    )
+  },
+  { 
+    label: l === "fr" ? "MÉDIAS" : "MEDIA", 
+    href: `/${l}/medias`,
+    color: "#6366F1",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/>
+      </svg>
+    )
+  },
 ];
 
 export default function Header({ locale }: { locale: L }) {
@@ -210,69 +298,126 @@ export default function Header({ locale }: { locale: L }) {
         <MainNav locale={l} />
       </div>
 
-      {/* Mobile drawer */}
+      {/* Mobile drawer - styled like UCAC */}
       {open && (
         <div className="fixed inset-0 z-50 md:hidden">
-          <div className="absolute inset-0 bg-black/40" onClick={() => setOpen(false)} aria-hidden />
-          <div className="absolute right-0 top-0 h-full w-[86%] max-w-sm bg-white shadow-2xl p-4 flex flex-col">
-            <div className="flex items-center justify-between pb-2 border-b">
-              <span className="text-xs uppercase tracking-wide text-neutral-500">Menu</span>
-              <button aria-label="Fermer" onClick={() => setOpen(false)} className="w-8 h-8 grid place-items-center rounded border border-neutral-200">
+          <div className="absolute inset-0 bg-black/50" onClick={() => setOpen(false)} aria-hidden />
+          <div className="absolute right-0 top-0 h-full w-[86%] max-w-sm bg-[#1a1a1a] shadow-2xl flex flex-col">
+            {/* Header du menu mobile */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-700">
+              <span className="text-sm uppercase tracking-wide text-gray-400">Menu</span>
+              <button aria-label="Fermer" onClick={() => setOpen(false)} className="w-8 h-8 grid place-items-center rounded bg-gray-800 text-white">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 6l12 12M6 18L18 6"/></svg>
               </button>
             </div>
-            <nav className="flex-1 overflow-y-auto py-3">
-              <ul className="space-y-1">
-                {mobileNav.map((item, idx) => (
-                  <li key={idx}>
-                    {item.children ? (
-                      <details open={openIdx === idx} onToggle={(e) => setOpenIdx((e.target as HTMLDetailsElement).open ? idx : null)}>
-                        <summary className="flex items-center justify-between px-2 py-2 rounded hover:bg-neutral-100 cursor-pointer">
-                          <span className="text-neutral-800 font-medium text-sm">{item.label}</span>
-                          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-                        </summary>
-                        <ul className="pl-4 py-1 space-y-1">
-                          {item.children.map((c) => (
-                            <li key={c.href}>
-                              <Link href={c.href} onClick={() => setOpen(false)} className="block px-2 py-2 text-sm rounded hover:bg-neutral-100 text-neutral-700">
-                                {c.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </details>
-                    ) : (
-                      <Link href={item.href!} onClick={() => setOpen(false)} className="block px-2 py-2 rounded hover:bg-neutral-100 text-neutral-800 text-sm">
-                        {item.label}
-                      </Link>
-                    )}
-                  </li>
-                ))}
+            <nav className="flex-1 overflow-y-auto">
+              <ul className="divide-y divide-gray-800">
+                {mobileNav.map((item, idx) => {
+                  const isActive = pathname === item.href || pathname?.startsWith(item.href + '/');
+                  return (
+                    <li key={idx}>
+                      {item.children ? (
+                        <details open={openIdx === idx} onToggle={(e) => setOpenIdx((e.target as HTMLDetailsElement).open ? idx : null)}>
+                          <summary className={`flex items-center justify-between px-4 py-4 cursor-pointer transition-colors ${isActive ? 'bg-gray-800' : 'hover:bg-gray-800'}`}>
+                            <div className="flex items-center gap-3">
+                              {item.icon && (
+                                <span style={{ color: item.color }} className="flex-shrink-0">
+                                  {item.icon}
+                                </span>
+                              )}
+                              <span className="text-white font-medium text-sm tracking-wide">{item.label}</span>
+                            </div>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-400"><path d="M6 9l6 6 6-6"/></svg>
+                          </summary>
+                          <ul className="bg-gray-900">
+                            {item.children.map((c) => (
+                              <li key={c.href}>
+                                <Link href={c.href} onClick={() => setOpen(false)} className="block px-12 py-3 text-sm text-gray-300 hover:text-white hover:bg-gray-800 transition-colors">
+                                  {c.label}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </details>
+                      ) : (
+                        <Link 
+                          href={item.href!} 
+                          onClick={() => setOpen(false)} 
+                          className={`flex items-center justify-between px-4 py-4 transition-colors ${isActive ? 'bg-[#BE2722]' : 'hover:bg-gray-800'}`}
+                        >
+                          <div className="flex items-center gap-3">
+                            {item.icon && (
+                              <span style={{ color: isActive ? 'white' : item.color }} className="flex-shrink-0">
+                                {item.icon}
+                              </span>
+                            )}
+                            <span className={`font-medium text-sm tracking-wide ${isActive ? 'text-white' : 'text-gray-200'}`}>{item.label}</span>
+                          </div>
+                          {/* Icônes carrées colorées à droite comme UCAC */}
+                          {item.icon && (
+                            <span 
+                              style={{ backgroundColor: item.color }} 
+                              className="w-10 h-10 rounded flex items-center justify-center text-white flex-shrink-0"
+                            >
+                              {item.icon}
+                            </span>
+                          )}
+                        </Link>
+                      )}
+                    </li>
+                  );
+                })}
               </ul>
 
+              {/* Search bar like UCAC */}
+              <div className="p-4 border-t border-gray-800">
+                <form action={`/${l}/recherche`} className="flex items-stretch bg-gray-800 rounded overflow-hidden">
+                  <input 
+                    className="bg-transparent text-white placeholder-gray-500 px-4 py-3 text-sm flex-1 focus:outline-none" 
+                    name="q" 
+                    placeholder={l === "fr" ? "Rechercher" : "Search"} 
+                  />
+                  <button type="submit" className="px-4 py-3 bg-gray-700 hover:bg-gray-600 text-white transition-colors">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <circle cx="11" cy="11" r="8"/>
+                      <path d="m21 21-4.35-4.35"/>
+                    </svg>
+                  </button>
+                </form>
+              </div>
+
               {/* Quick links */}
-              <div className="mt-4 border-t pt-3">
+              <div className="p-4 border-t border-gray-800 space-y-3">
                 {isAdmin && (
-                  <Link href={`/${l}/admin`} onClick={() => setOpen(false)} className="block text-center rounded px-3 py-2 text-sm bg-green-600 text-white hover:bg-green-700 mb-2">
+                  <Link href={`/${l}/admin`} onClick={() => setOpen(false)} className="flex items-center justify-center gap-2 rounded px-4 py-3 text-sm bg-green-600 text-white hover:bg-green-700 font-medium">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
                     Admin
                   </Link>
                 )}
                 <SignedOut>
-                  <div className="grid grid-cols-2 gap-2">
+                  <div className="grid grid-cols-2 gap-3">
                     <SignInButton mode="modal" forceRedirectUrl={currentUrl} fallbackRedirectUrl={currentUrl}>
                       <button
                         onClick={() => setOpen(false)}
-                        className="text-center rounded px-3 py-2 text-sm bg-red-600 text-white hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 w-full"
+                        className="flex items-center justify-center gap-2 rounded px-4 py-3 text-sm bg-[#BE2722] text-white hover:bg-[#a51f1a] font-medium w-full"
                       >
-                        {l === "fr" ? "Se connecter" : "Login"}
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        {l === "fr" ? "Connexion" : "Login"}
                       </button>
                     </SignInButton>
                     <SignUpButton mode="modal" forceRedirectUrl={currentUrl} signInForceRedirectUrl={currentUrl} fallbackRedirectUrl={currentUrl}>
                       <button
                         onClick={() => setOpen(false)}
-                        className="text-center rounded px-3 py-2 text-sm bg-red-600 text-white hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600 w-full"
+                        className="flex items-center justify-center gap-2 rounded px-4 py-3 text-sm bg-gray-700 text-white hover:bg-gray-600 font-medium w-full"
                       >
-                        {l === "fr" ? "S’inscrire" : "Register"}
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M15 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm-9-2V7H4v3H1v2h3v3h2v-3h3v-2H6zm9 4c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                        </svg>
+                        {l === "fr" ? "Inscription" : "Register"}
                       </button>
                     </SignUpButton>
                   </div>
@@ -283,19 +428,25 @@ export default function Header({ locale }: { locale: L }) {
                   </div>
                 </SignedIn>
                 
-                <div className="mt-3 grid grid-cols-3 gap-2">
+                <div className="grid grid-cols-3 gap-2">
                   <Link
                     href={`/${l}/dons`}
                     onClick={() => setOpen(false)}
-                    className="text-center rounded px-3 py-2 text-sm bg-red-600 text-white hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                    className="flex flex-col items-center justify-center gap-1 rounded px-3 py-3 text-xs bg-[#BE2722] text-white hover:bg-[#a51f1a] font-medium"
                   >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                    </svg>
                     Dons
                   </Link>
                   <Link
                     href={`/${l}/webmail`}
                     onClick={() => setOpen(false)}
-                    className="text-center rounded px-3 py-2 text-sm bg-red-600 text-white hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                    className="flex flex-col items-center justify-center gap-1 rounded px-3 py-3 text-xs bg-[#6366F1] text-white hover:bg-[#4f46e5] font-medium"
                   >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+                    </svg>
                     Webmail
                   </Link>
                   <button
@@ -303,19 +454,18 @@ export default function Header({ locale }: { locale: L }) {
                       setOpen(false);
                       setIsNewsletterModalOpen(true);
                     }}
-                    className="text-center rounded px-3 py-2 text-sm bg-red-600 text-white hover:bg-red-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                    className="flex flex-col items-center justify-center gap-1 rounded px-3 py-3 text-xs bg-[#10B981] text-white hover:bg-[#059669] font-medium"
                   >
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+                    </svg>
                     Newsletter
                   </button>
                 </div>
               </div>
 
-              {/* Search + Language */}
-              <div className="mt-4 grid grid-cols-[1fr_auto] gap-2 items-stretch">
-                <form action={`/${l}/recherche`} className="flex items-stretch border border-neutral-300 rounded">
-                  <input className="bg-white text-black placeholder-neutral-500 px-2 py-2 text-sm flex-1" name="q" placeholder={l === "fr" ? "Rechercher" : "Search"} />
-                  <button type="submit" className="px-3 text-sm">🔍</button>
-                </form>
+              {/* Language switcher */}
+              <div className="p-4 border-t border-gray-800">
                 <LanguageSwitcher locale={l} />
               </div>
             </nav>

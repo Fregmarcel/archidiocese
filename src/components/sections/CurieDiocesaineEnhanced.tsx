@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from "next/image";
-import { Eye, Users } from 'lucide-react';
+import { Eye, Users, ChevronDown, ChevronUp } from 'lucide-react';
 import CurieModal from './CurieModal';
 
 type Props = { locale: string };
@@ -32,6 +32,7 @@ export default function CurieDiocesaineEnhanced({ locale }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [allCurieMembers, setAllCurieMembers] = useState<CurieMemberDetailed[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
 
   // Charger les membres depuis l'API
   useEffect(() => {
@@ -104,105 +105,124 @@ export default function CurieDiocesaineEnhanced({ locale }: Props) {
     <>
       <section className="bg-white py-16">
         <div className="container mx-auto px-4">
-          {/* Header */}
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-extrabold uppercase text-[#25282E] mb-4">
-              Curie Diocésaine
-            </h2>
-            <p className="text-neutral-600 text-lg max-w-2xl mx-auto">
-              Découvrez les membres de la Curie Diocésaine qui œuvrent au service de l'Archidiocèse de Yaoundé
-            </p>
-            <div className="relative my-8 flex items-center justify-center">
-              <span className="h-px w-24 bg-neutral-300" />
-              <span className="mx-4 grid place-items-center w-10 h-10 rounded-full bg-[#BE2722] text-white">
-                <Users size={20} />
-              </span>
-              <span className="h-px w-24 bg-neutral-300" />
+          {/* Header cliquable / Accordéon */}
+          <button 
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="w-full text-center mb-8 group focus:outline-none"
+          >
+            <div className="inline-block border-2 border-[#BE2722] rounded-xl px-8 py-4 hover:bg-[#BE2722]/5 transition-colors duration-300">
+              <div className="flex items-center justify-center gap-4">
+                <h2 className="text-3xl md:text-4xl font-extrabold uppercase text-[#25282E] group-hover:text-[#BE2722] transition-colors">
+                  Curie Diocésaine
+                </h2>
+                <span className="w-10 h-10 rounded-full bg-[#BE2722] text-white grid place-items-center transition-transform duration-300">
+                  {isExpanded ? <ChevronUp size={24} /> : <ChevronDown size={24} />}
+                </span>
+              </div>
+              <p className="text-neutral-600 text-sm mt-2">
+                {isExpanded ? "Cliquez pour réduire" : "Cliquez pour découvrir les membres"}
+              </p>
             </div>
-          </div>
+          </button>
 
-          {/* Loading state */}
-          {isLoading ? (
-            <div className="text-center py-12">
-              <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#BE2722]"></div>
-              <p className="mt-4 text-neutral-600">Chargement des membres...</p>
+          {/* Contenu dépliable */}
+          <div className={`overflow-hidden transition-all duration-500 ease-in-out ${isExpanded ? 'max-h-[2000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+            <div className="text-center mb-8">
+              <p className="text-neutral-600 text-lg max-w-2xl mx-auto">
+                Découvrez les membres de la Curie Diocésaine qui œuvrent au service de l'Archidiocèse de Yaoundé
+              </p>
+              <div className="relative my-6 flex items-center justify-center">
+                <span className="h-px w-24 bg-neutral-300" />
+                <span className="mx-4 grid place-items-center w-10 h-10 rounded-full bg-[#BE2722] text-white">
+                  <Users size={20} />
+                </span>
+                <span className="h-px w-24 bg-neutral-300" />
+              </div>
             </div>
-          ) : displayedMembers.length === 0 ? (
-            <div className="text-center py-12">
-              <p className="text-neutral-600 text-lg">Aucun membre disponible pour le moment.</p>
-            </div>
-          ) : (
-            <>
-              {/* Grid des membres */}
-              <div className={`grid gap-3 mb-12 ${
-                displayedMembers.length === 1 ? 'grid-cols-1 md:grid-cols-1 max-w-sm mx-auto' :
-                displayedMembers.length === 2 ? 'grid-cols-1 md:grid-cols-2 max-w-2xl mx-auto' :
-                displayedMembers.length === 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto' :
-                displayedMembers.length === 4 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto' :
-                'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
-              }`}>
-            {displayedMembers.map((member) => (
-              <div key={member.id} className="group cursor-pointer" onClick={() => openDetailModal(member)}>
-                <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 h-72">
-                  <div className="h-40 overflow-hidden relative">
-                    <Image
-                      src={member.image}
-                      alt={member.name}
-                      width={400}
-                      height={300}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                    />
-                    {/* Overlay au survol */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <div className="absolute bottom-4 left-4 right-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <p className="text-sm font-medium">Cliquer pour voir le profil</p>
+
+            {/* Loading state */}
+            {isLoading ? (
+              <div className="text-center py-12">
+                <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-[#BE2722]"></div>
+                <p className="mt-4 text-neutral-600">Chargement des membres...</p>
+              </div>
+            ) : displayedMembers.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-neutral-600 text-lg">Aucun membre disponible pour le moment.</p>
+              </div>
+            ) : (
+              <>
+                {/* Grid des membres */}
+                <div className={`grid gap-3 mb-12 ${
+                  displayedMembers.length === 1 ? 'grid-cols-1 md:grid-cols-1 max-w-sm mx-auto' :
+                  displayedMembers.length === 2 ? 'grid-cols-1 md:grid-cols-2 max-w-2xl mx-auto' :
+                  displayedMembers.length === 3 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 max-w-4xl mx-auto' :
+                  displayedMembers.length === 4 ? 'grid-cols-1 md:grid-cols-2 lg:grid-cols-4 max-w-6xl mx-auto' :
+                  'grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5'
+                }`}>
+                  {displayedMembers.map((member) => (
+                    <div key={member.id} className="group cursor-pointer" onClick={() => openDetailModal(member)}>
+                      <div className="bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-2 h-72">
+                        <div className="h-40 overflow-hidden relative">
+                          <Image
+                            src={member.image}
+                            alt={member.name}
+                            width={400}
+                            height={300}
+                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          />
+                          {/* Overlay au survol */}
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div className="absolute bottom-4 left-4 right-4 text-white transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                              <div className="flex items-center justify-between">
+                                <div>
+                                  <p className="text-sm font-medium">Cliquer pour voir le profil</p>
+                                </div>
+                                <Eye size={20} className="opacity-80" />
+                              </div>
+                            </div>
                           </div>
-                          <Eye size={20} className="opacity-80" />
+                        </div>
+                        
+                        <div className="p-4 h-32 flex flex-col">
+                          <h3 className="font-bold text-[#25282E] text-sm mb-1 group-hover:text-[#BE2722] transition-colors leading-tight overflow-hidden" 
+                              style={{
+                                display: '-webkit-box',
+                                WebkitLineClamp: 2,
+                                WebkitBoxOrient: 'vertical' as const,
+                                textOverflow: 'ellipsis'
+                              }}>
+                            {member.name}
+                          </h3>
+                          <p className="text-[#BE2722] font-semibold text-xs uppercase tracking-wide mb-1 truncate">
+                            {member.role}
+                          </p>
+                          {member.subtitle && (
+                            <p className="text-neutral-600 text-xs truncate mt-auto">
+                              {member.subtitle}
+                            </p>
+                          )}
                         </div>
                       </div>
                     </div>
-                  </div>
-                  
-                  <div className="p-4 h-32 flex flex-col">
-                    <h3 className="font-bold text-[#25282E] text-sm mb-1 group-hover:text-[#BE2722] transition-colors leading-tight overflow-hidden" 
-                        style={{
-                          display: '-webkit-box',
-                          WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical' as const,
-                          textOverflow: 'ellipsis'
-                        }}>
-                      {member.name}
-                    </h3>
-                    <p className="text-[#BE2722] font-semibold text-xs uppercase tracking-wide mb-1 truncate">
-                      {member.role}
-                    </p>
-                    {member.subtitle && (
-                      <p className="text-neutral-600 text-xs truncate mt-auto">
-                        {member.subtitle}
-                      </p>
-                    )}
-                  </div>
+                  ))}
                 </div>
-              </div>
-            ))}
-          </div>
 
-          {/* Bouton Voir Plus */}
-          {hasMoreMembers && (
-            <div className="text-center">
-              <button
-                onClick={openListModal}
-                className="inline-flex items-center gap-3 bg-[#BE2722] text-white px-8 py-4 rounded-xl hover:bg-[#a51f1a] transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl"
-              >
-                <Users size={24} />
-                Voir tous les membres ({allCurieMembers.length})
-              </button>
-            </div>
-          )}
-        </>
-          )}
+                {/* Bouton Voir Plus */}
+                {hasMoreMembers && (
+                  <div className="text-center">
+                    <button
+                      onClick={openListModal}
+                      className="inline-flex items-center gap-3 bg-[#BE2722] text-white px-8 py-4 rounded-xl hover:bg-[#a51f1a] transition-all duration-200 font-semibold text-lg shadow-lg hover:shadow-xl"
+                    >
+                      <Users size={24} />
+                      Voir tous les membres ({allCurieMembers.length})
+                    </button>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
         </div>
       </section>
 
