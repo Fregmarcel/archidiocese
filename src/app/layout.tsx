@@ -12,6 +12,11 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: "Archidiocèse de Yaoundé",
   description: "Site officiel de l'Archidiocèse de Yaoundé",
+  icons: {
+    icon: "/logo.jpeg",
+    shortcut: "/logo.jpeg",
+    apple: "/logo.jpeg",
+  },
 };
 
 export default function RootLayout({

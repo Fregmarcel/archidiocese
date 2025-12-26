@@ -103,9 +103,13 @@ export default function CrudManager<T extends { _id?: string; name?: string }>({
           const dataArray = Array.isArray(result.data) ? result.data : [result.data];
           setData(dataArray);
           console.log('✅ CrudManager - Set data (result.data):', dataArray.length, 'items');
-        } else if (result?.doc) {
+        } else if ('doc' in result && result.doc !== null) {
           setData([result.doc]);
           console.log('✅ CrudManager - Set data (result.doc): 1 item');
+        } else if ('doc' in result && result.doc === null) {
+          // Cas spécial: doc existe mais est null (entité non encore créée)
+          setData([]);
+          console.log('⚠️ CrudManager - doc is null (entity not yet created)');
         } else {
           setData([]);
           console.warn('⚠️ CrudManager - No data found in result');

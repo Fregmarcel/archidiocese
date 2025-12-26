@@ -6,14 +6,19 @@ const Hero = dynamic(() => import("@/components/hero/Hero"), {
   loading: () => <div className="animate-pulse bg-gray-100 h-96"></div>
 });
 
-const FlashParishes = dynamic(() => import("@/components/sections/FlashParishes"), { 
+const StructureOrganisation = dynamic(() => import("@/components/sections/StructureOrganisation"), { 
   ssr: false,
-  loading: () => <div className="animate-pulse bg-gray-100 h-24"></div>
+  loading: () => <div className="animate-pulse bg-gray-100 h-48"></div>
 });
 
 const NewsCarousel = dynamic(() => import("@/components/sections/NewsCarousel"), { 
   ssr: false,
   loading: () => <div className="animate-pulse bg-gray-100 h-64"></div>
+});
+
+const FlashParishesSimple = dynamic(() => import("@/components/sections/FlashParishesSimple"), { 
+  ssr: false,
+  loading: () => <div className="animate-pulse bg-gray-100 h-24"></div>
 });
 
 const EventsAgenda = dynamic(() => import("@/components/sections/EventsAgendaDynamic"), { 
@@ -35,8 +40,9 @@ export default function ClientSectionsWrapper({ locale }: { locale: string }) {
   return (
     <>
       <Hero locale={locale} />
-      <FlashParishes locale={locale} />
+      <StructureOrganisation locale={locale} />
       <NewsCarousel locale={locale} />
+      <FlashParishesSimple locale={locale} />
       <EventsAgenda locale={locale} />
       <PartnersNetworks locale={locale} />
       <NewsletterBandModal locale={locale} />

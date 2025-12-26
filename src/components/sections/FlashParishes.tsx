@@ -161,7 +161,7 @@ export default function FlashParishes({ locale }: Props) {
               href = `/${locale}/commissions-diocesaines`;
             } else if (p.title === 'Le SEDY') {
               href = `/${locale}/services-diocesains/sedi`;
-            } else if (p.title === 'Les services diocésains') {
+            } else if (p.title === 'services diocésains') {
               href = `/${locale}/services-diocesains`;
             } else if (p.title === 'Universités – Grandes écoles') {
               href = `/${locale}/oeuvres-missionnaires`;
@@ -184,16 +184,15 @@ export default function FlashParishes({ locale }: Props) {
         </div>
       </div>
 
-      {/* Boutons outline masqués temporairement
+      {/* Boutons bleus avec hover vert */}
       <div className="container mx-auto px-4 pb-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-          <Link href={`/${locale}/priere`} className="w-full inline-flex items-center justify-center rounded border border-[#BE2722] text-[#BE2722] px-3 py-2 text-sm font-semibold hover:bg-[#BE2722]/5">Prière catholique</Link>
-          <Link href={`/${locale}/homelies`} className="w-full inline-flex items-center justify-center rounded border border-[#BE2722] text-[#BE2722] px-3 py-2 text-sm font-semibold hover:bg-[#BE2722]/5">Homélies et enseignements</Link>
-          <Link href={`/${locale}/reflexion`} className="w-full inline-flex items-center justify-center rounded border border-[#BE2722] text-[#BE2722] px-3 py-2 text-sm font-semibold hover:bg-[#BE2722]/5">Réflexion théologique</Link>
-          <Link href={`/${locale}/bibliotheque`} className="w-full inline-flex items-center justify-center rounded border border-[#BE2722] text-[#BE2722] px-3 py-2 text-sm font-semibold hover:bg-[#BE2722]/5">Bibliothèque</Link>
+          <Link href={`/${locale}/priere`} className="w-full inline-flex items-center justify-center rounded border-2 border-blue-600 bg-blue-600 text-white px-3 py-2 text-sm font-semibold hover:bg-[#2E9B51] hover:border-[#2E9B51] transition-colors">Prière catholique</Link>
+          <Link href={`/${locale}/homelies`} className="w-full inline-flex items-center justify-center rounded border-2 border-blue-600 bg-blue-600 text-white px-3 py-2 text-sm font-semibold hover:bg-[#2E9B51] hover:border-[#2E9B51] transition-colors">Homélies et enseignements</Link>
+          <Link href={`/${locale}/reflexion`} className="w-full inline-flex items-center justify-center rounded border-2 border-blue-600 bg-blue-600 text-white px-3 py-2 text-sm font-semibold hover:bg-[#2E9B51] hover:border-[#2E9B51] transition-colors">Réflexion théologique</Link>
+          <Link href={`/${locale}/bibliotheque`} className="w-full inline-flex items-center justify-center rounded border-2 border-blue-600 bg-blue-600 text-white px-3 py-2 text-sm font-semibold hover:bg-[#2E9B51] hover:border-[#2E9B51] transition-colors">Bibliothèque</Link>
         </div>
       </div>
-      */}
     </SectionReveal>
   );
 }

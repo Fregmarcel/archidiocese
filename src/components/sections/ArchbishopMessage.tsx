@@ -74,9 +74,9 @@ export default function ArchbishopMessage({ locale }: Props) {
 
   return (
     <section className="bg-gradient-to-b from-white to-neutral-50">
-      <div className="container mx-auto px-4 py-8 md:py-12">
+      <div className="container mx-auto px-4 py-6 md:py-8">
         {/* En-tête avec photo et présentation */}
-        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-8 lg:gap-12 mb-10">
+        <div className="flex flex-col lg:flex-row items-center lg:items-start justify-center gap-8 lg:gap-12">
           {/* Photo */}
           <div className="flex-shrink-0">
             <div className="relative w-72 md:w-80 aspect-[3/4] rounded-xl overflow-hidden shadow-2xl border-4 border-white ring-1 ring-neutral-200">
@@ -108,7 +108,7 @@ export default function ArchbishopMessage({ locale }: Props) {
             </div>
             
             {/* Onglets directement sous l'encadré */}
-            <div className="flex flex-wrap justify-center gap-2 mt-6">
+            <div className="flex flex-wrap justify-center gap-1 mt-6">
               <button
                 onClick={() => setActiveTab("description")}
                 className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-semibold transition-all text-sm ${

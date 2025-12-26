@@ -94,8 +94,10 @@ export default function PartnersNetworks({ locale }: Props) {
       </div>
 
       <div className="container mx-auto px-4 py-14 md:py-20 text-center">
-        {/* Heading */}
-        <h2 className="text-2xl md:text-3xl font-extrabold uppercase text-white">Réseaux & Partenaires</h2>
+        {/* Heading avec bordure */}
+        <div className="inline-block border-2 border-white rounded-lg px-6 py-3 mb-4">
+          <h2 className="text-2xl md:text-3xl font-extrabold uppercase text-white">Réseaux & Partenaires</h2>
+        </div>
         <div className="relative my-4 flex items-center justify-center text-white/90">
           <span className="h-px w-24 bg-white/40" />
           <span className="mx-3 grid place-items-center w-8 h-8 rounded bg-white/10">

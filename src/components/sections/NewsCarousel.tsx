@@ -179,9 +179,11 @@ export default function NewsCarousel({ locale }: Props) {
   return (
     <SectionReveal className="bg-white">
       <div className="container mx-auto px-4 py-10">
-        {/* Heading */}
+        {/* Heading avec bordure */}
         <div className="text-center">
-          <h2 className="text-2xl md:text-3xl font-extrabold uppercase text-[#25282E]">Actualités</h2>
+          <div className="inline-block border-2 border-[#BE2722] rounded-lg px-6 py-3 mb-4">
+            <h2 className="text-2xl md:text-3xl font-extrabold uppercase text-[#BE2722]">Actualités</h2>
+          </div>
           <p className="text-neutral-500 text-sm md:text-base mt-1">
             Retrouvez toutes les informations et activités en temps réel
           </p>

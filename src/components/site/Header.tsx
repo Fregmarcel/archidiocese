@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import LanguageSwitcher from "@/components/site/LanguageSwitcher";
 import MainNav from "@/components/site/MainNav";
 import NewsletterModal from "@/components/modals/NewsletterModal";
@@ -229,7 +230,7 @@ export default function Header({ locale }: { locale: L }) {
           {/* Logo */}
           <div className="col-span-12 md:col-span-3 flex items-center gap-1.5">
             <Link href={`/${l}`} className="flex items-center gap-2">
-              <div className="w-12 h-12 bg-red-700 rounded" aria-hidden />
+              <Image src="/logo.jpeg" alt="Blason Archidiocèse" width={48} height={48} className="w-12 h-12 object-contain" />
               <span className="sr-only">Logo</span>
               <span className="text-xl font-semibold text-neutral-900">Archidiocèse de Yaoundé</span>
             </Link>

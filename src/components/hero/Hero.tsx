@@ -19,10 +19,10 @@ type Slide = {
 };
 
 const SLIDES: Slide[] = [
-  { id: 1, src: '/c1.png', alt: 'Campus Archidiocèse', overlay: true },
-  { id: 2, src: '/c2.png', alt: 'Établissement Catholique', overlay: true },
-  { id: 3, src: '/c3.png', alt: 'Visite Pastorale', overlay: true },
-  { id: 4, src: '/c4.png', alt: 'Infrastructure Diocésaine', overlay: true },
+  { id: 1, src: '/c1.jpg', alt: "Paroisse Notre Dame des 7 douleurs d'AKONO", overlay: true },
+  { id: 2, src: '/c2.jpg', alt: 'Cathédrale Notre Dame des Victoires de Yaoundé', overlay: true },
+  { id: 3, src: '/c3.jpg', alt: 'Basilique Mineure de Yaoundé', overlay: true },
+  { id: 4, src: '/c4.jpg', alt: 'Paroisse Saint Esprit de MVOLYE', overlay: true },
 ];
 
 const viewportId = 'hero-viewport';
@@ -120,7 +120,7 @@ export default function Hero({ locale, className = '' }: HeroProps) {
                       exit={{ opacity: 0 }}
                       transition={{ duration: 0.3 }}
                     >
-                      <BannerOverlay locale={locale} />
+                      <BannerOverlay locale={locale} title={s.alt} />
                     </motion.div>
                   )}
                 </AnimatePresence>
