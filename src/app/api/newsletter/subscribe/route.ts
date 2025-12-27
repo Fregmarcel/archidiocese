@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { connect } from '../../../../lib/mongodb';
 import NewsletterSubscription from '../../../../models/NewsletterSubscription';
+import { sendConfirmationEmail } from '../../../../lib/email';
 
 export async function POST(request: NextRequest) {
   try {
@@ -39,8 +40,13 @@ export async function POST(request: NextRequest) {
         const token = existingSubscription.generateConfirmationToken();
         await existingSubscription.save();
         
-        // TODO: Envoyer email de confirmation
-        console.log(`Email de confirmation à envoyer à ${email} avec token: ${token}`);
+        // Envoyer email de confirmation
+        try {
+          await sendConfirmationEmail(email, firstName || null, token, language);
+        } catch (emailError) {
+          console.error('Error sending confirmation email:', emailError);
+          // Continuer même si l'email échoue
+        }
         
         return NextResponse.json({
           success: true,
@@ -64,8 +70,13 @@ export async function POST(request: NextRequest) {
     const token = subscription.generateConfirmationToken();
     await subscription.save();
 
-    // TODO: Envoyer email de confirmation
-    console.log(`Email de confirmation à envoyer à ${email} avec token: ${token}`);
+    // Envoyer email de confirmation
+    try {
+      await sendConfirmationEmail(email, firstName || null, token, language);
+    } catch (emailError) {
+      console.error('Error sending confirmation email:', emailError);
+      // Continuer même si l'email échoue
+    }
     
     return NextResponse.json({
       success: true,

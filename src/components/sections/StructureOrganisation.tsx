@@ -38,7 +38,7 @@ export default function StructureOrganisation({ locale }: Props) {
               className="relative h-16 md:h-20 rounded overflow-hidden group"
             >
               <Image src="/logo.jpeg" alt={p.title} fill sizes="(min-width: 1024px) 25vw, 50vw" className="object-contain bg-white" />
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-600/90 to-blue-600/70 group-hover:from-[#2E9B51]/95 group-hover:to-[#2E9B51]/80 transition" />
+              <div className="absolute inset-0 bg-gradient-to-r from-[#2E9B51]/90 to-[#2E9B51]/70 group-hover:from-blue-600/95 group-hover:to-blue-600/80 transition" />
               <div className="absolute inset-0 p-3 flex items-center">
                 <h3 className="text-white font-extrabold text-[9px] md:text-[10px] leading-tight uppercase drop-shadow">
                   {p.title}

@@ -232,11 +232,34 @@ export default function Header({ locale }: { locale: L }) {
             <Link href={`/${l}`} className="flex items-center gap-2">
               <Image src="/logo.jpeg" alt="Blason Archidiocèse" width={48} height={48} className="w-12 h-12 object-contain" />
               <span className="sr-only">Logo</span>
-              <span className="text-xl font-semibold text-neutral-900">Archidiocèse de Yaoundé</span>
+              <span className="text-xl font-semibold text-neutral-900 border-2 border-[#BE2722] px-3 py-1 rounded">Archidiocèse de Yaoundé</span>
             </Link>
           </div>
           {/* Center mini-icon quick links */}
           <div className="hidden md:flex col-span-12 md:col-span-6 justify-center gap-8 text-sm text-gray-600 flex-wrap">
+            {/* Menu Service avec sous-menu */}
+            <div className="relative group">
+              <div className="flex items-center gap-2 hover:text-gray-900 cursor-pointer">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                  <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                  <path d="M2 17l10 5 10-5" />
+                  <path d="M2 12l10 5 10-5" />
+                </svg>
+                <div className="leading-tight">
+                  <div className="uppercase text-[10px] tracking-wide opacity-70">Service</div>
+                  <div>Services</div>
+                </div>
+              </div>
+              {/* Sous-menu */}
+              <div className="absolute left-0 top-full mt-1 bg-white shadow-lg rounded-lg py-2 w-64 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <Link href={`/${l}/services-diocesains`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#BE2722]">
+                  Conseil presbytérial
+                </Link>
+                <Link href={`/${l}/services-diocesains`} className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#BE2722]">
+                  Conseil pour les affaires économiques
+                </Link>
+              </div>
+            </div>
             <Link href={`/${l}/radios`} className="flex items-center gap-2 hover:text-gray-900">
               {/* Radio icon */}
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
