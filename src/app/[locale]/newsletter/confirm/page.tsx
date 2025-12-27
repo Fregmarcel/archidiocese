@@ -1,15 +1,15 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useSearchParams, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, AlertCircle, Loader2, Mail } from 'lucide-react';
 
-export default function ConfirmNewsletterPage({ params }: { params: { locale: string } }) {
+export default function ConfirmNewsletterPage() {
   const searchParams = useSearchParams();
-  const router = useRouter();
+  const params = useParams();
   const token = searchParams.get('token');
-  const locale = params.locale || 'fr';
+  const locale = (params?.locale as string) || 'fr';
 
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading');
   const [message, setMessage] = useState('');

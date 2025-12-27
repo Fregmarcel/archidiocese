@@ -1,14 +1,15 @@
 'use client';
 
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useSearchParams, useParams } from 'next/navigation';
 import Link from 'next/link';
 import { CheckCircle, AlertCircle, Loader2, Mail } from 'lucide-react';
 
-export default function UnsubscribeNewsletterPage({ params }: { params: { locale: string } }) {
+export default function UnsubscribeNewsletterPage() {
   const searchParams = useSearchParams();
+  const params = useParams();
   const initialEmail = searchParams.get('email') || '';
-  const locale = params.locale || 'fr';
+  const locale = (params?.locale as string) || 'fr';
 
   const [email, setEmail] = useState(initialEmail);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
