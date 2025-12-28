@@ -100,6 +100,51 @@ const buildMobileNav = (l: L): NavItem[] => [
     )
   },
   { 
+    label: l === "fr" ? "SERVICES" : "SERVICES", 
+    href: `/${l}/services-diocesains`,
+    color: "#059669",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+      </svg>
+    ),
+    children: [
+      { label: l === "fr" ? "Services diocésains" : "Diocesan Services", href: `/${l}/services-diocesains` },
+      { label: l === "fr" ? "Aumônerie diocésaine" : "Diocesan Chaplaincy", href: `/${l}/services-diocesains/sedi` },
+      { label: l === "fr" ? "Universités & Grandes Écoles" : "Universities", href: `/${l}/services` },
+    ]
+  },
+  { 
+    label: "RADIO MARIA", 
+    href: `/${l}/radios`,
+    color: "#DC2626",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M3.24 6.15C2.51 6.43 2 7.17 2 8v12c0 1.1.89 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2H8.3l8.26-3.34-.37-.92-13 5.25zM7 20c-1.66 0-3-1.34-3-3s1.34-3 3-3 3 1.34 3 3-1.34 3-3 3zm13-8h-2v-2h2v2z"/>
+      </svg>
+    )
+  },
+  { 
+    label: l === "fr" ? "TÉLÉVISION DIOCÉSAINE" : "DIOCESAN TV", 
+    href: `/${l}/television`,
+    color: "#7C3AED",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M21 3H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h5v2h8v-2h5c1.1 0 1.99-.9 1.99-2L23 5c0-1.1-.9-2-2-2zm0 14H3V5h18v12z"/>
+      </svg>
+    )
+  },
+  { 
+    label: l === "fr" ? "PRESSE DIOCÉSAINE" : "DIOCESAN PRESS", 
+    href: `/${l}/presses`,
+    color: "#0891B2",
+    icon: (
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M19 5v14H5V5h14m0-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+      </svg>
+    )
+  },
+  { 
     label: l === "fr" ? "MÉDIAS" : "MEDIA", 
     href: `/${l}/medias`,
     color: "#6366F1",
@@ -269,8 +314,8 @@ export default function Header({ locale }: { locale: L }) {
                 <path d="M14 13h6M14 17h6" />
               </svg>
               <div className="leading-tight">
-                <div className="uppercase text-[10px] tracking-wide opacity-70">Radios</div>
-                <div>Radios Diocésaine</div>
+                <div className="uppercase text-[10px] tracking-wide opacity-70">Radio</div>
+                <div>Radio Maria</div>
               </div>
             </Link>
             <Link href={`/${l}/television`} className="flex items-center gap-2 hover:text-gray-900">
