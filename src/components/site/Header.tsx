@@ -110,8 +110,9 @@ const buildMobileNav = (l: L): NavItem[] => [
     ),
     children: [
       { label: l === "fr" ? "Services diocésains" : "Diocesan Services", href: `/${l}/services-diocesains` },
-      { label: l === "fr" ? "Aumônerie diocésaine" : "Diocesan Chaplaincy", href: `/${l}/services-diocesains/sedi` },
-      { label: l === "fr" ? "Universités & Grandes Écoles" : "Universities", href: `/${l}/services` },
+      { label: l === "fr" ? "Aumôneries diocésaines" : "Diocesan Chaplaincies", href: `/${l}/aumoneries` },
+      { label: l === "fr" ? "Universités & Grandes Écoles" : "Universities", href: `/${l}/universites` },
+      { label: l === "fr" ? "Instituts religieux" : "Religious Institutes", href: `/${l}/instituts-religieux` },
     ]
   },
   { 

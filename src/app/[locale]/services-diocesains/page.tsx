@@ -1,225 +1,136 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { 
-  Users, 
-  Heart, 
-  BookOpen, 
-  Music, 
-  Cross,
-  Building2,
-  HandHeart,
-  Globe,
-  ChevronRight,
-  Phone,
-  Mail,
-  MapPin
-} from 'lucide-react';
+import { Search, Users, Phone, Clock, ChevronRight } from 'lucide-react';
 
-const services = [
-  {
-    id: 'pastorale-familiale',
-    name: 'Pastorale Familiale',
-    description: 'Accompagnement des familles dans leur vie de foi, préparation au mariage, soutien aux couples.',
-    icon: Heart,
-    color: 'bg-rose-500',
-    contact: {
-      phone: '+237 222 XX XX XX',
-      email: 'famille@archidiocese-yaounde.org'
-    }
-  },
-  {
-    id: 'catechese',
-    name: 'Catéchèse',
-    description: 'Formation chrétienne pour les enfants, jeunes et adultes. Préparation aux sacrements.',
-    icon: BookOpen,
-    color: 'bg-blue-500',
-    contact: {
-      phone: '+237 222 XX XX XX',
-      email: 'catechese@archidiocese-yaounde.org'
-    }
-  },
-  {
-    id: 'liturgie',
-    name: 'Commission Liturgique',
-    description: 'Organisation et animation des célébrations liturgiques, formation des servants d\'autel.',
-    icon: Cross,
-    color: 'bg-purple-500',
-    contact: {
-      phone: '+237 222 XX XX XX',
-      email: 'liturgie@archidiocese-yaounde.org'
-    }
-  },
-  {
-    id: 'caritas',
-    name: 'Caritas Diocésaine',
-    description: 'Action sociale et caritative, aide aux personnes vulnérables, projets de développement.',
-    icon: HandHeart,
-    color: 'bg-green-500',
-    contact: {
-      phone: '+237 222 XX XX XX',
-      email: 'caritas@archidiocese-yaounde.org'
-    }
-  },
-  {
-    id: 'jeunesse',
-    name: 'Pastorale des Jeunes',
-    description: 'Accompagnement spirituel des jeunes, mouvements de jeunesse, camps et retraites.',
-    icon: Users,
-    color: 'bg-orange-500',
-    contact: {
-      phone: '+237 222 XX XX XX',
-      email: 'jeunesse@archidiocese-yaounde.org'
-    }
-  },
-  {
-    id: 'communications',
-    name: 'Communications Sociales',
-    description: 'Médias diocésains, radio, télévision, presse écrite et présence numérique.',
-    icon: Globe,
-    color: 'bg-cyan-500',
-    contact: {
-      phone: '+237 222 XX XX XX',
-      email: 'communication@archidiocese-yaounde.org'
-    }
-  },
-  {
-    id: 'musique-sacree',
-    name: 'Musique Sacrée',
-    description: 'Formation des chorales, promotion de la musique liturgique et du chant sacré.',
-    icon: Music,
-    color: 'bg-indigo-500',
-    contact: {
-      phone: '+237 222 XX XX XX',
-      email: 'musique@archidiocese-yaounde.org'
-    }
-  },
-  {
-    id: 'vocations',
-    name: 'Service des Vocations',
-    description: 'Accompagnement des vocations sacerdotales et religieuses, discernement vocationnel.',
-    icon: Building2,
-    color: 'bg-amber-500',
-    contact: {
-      phone: '+237 222 XX XX XX',
-      email: 'vocations@archidiocese-yaounde.org'
-    }
-  }
-];
+interface DiocesanService {
+  _id: string;
+  name: string;
+  description: string;
+  category?: string;
+  coordinator?: string;
+  coordinatorPhone?: string;
+  schedule?: string;
+  slug?: string;
+}
 
 export default function ServicesDiocesainsPage() {
   const params = useParams();
-  const locale = params?.locale as string || 'fr';
-  const [selectedService, setSelectedService] = useState<string | null>(null);
+  const locale = (params?.locale as string) || 'fr';
+  const [services, setServices] = useState<DiocesanService[]>([]);
+  const [filteredServices, setFilteredServices] = useState<DiocesanService[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchServices();
+  }, []);
+
+  useEffect(() => {
+    if (searchTerm) {
+      const filtered = services.filter(service =>
+        service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        service.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredServices(filtered);
+    } else {
+      setFilteredServices(services);
+    }
+  }, [searchTerm, services]);
+
+  const fetchServices = async () => {
+    try {
+      const response = await fetch('/api/diocesan-services');
+      const data = await response.json();
+      if (data.success) {
+        setServices(data.data);
+        setFilteredServices(data.data);
+      }
+    } catch (error) {
+      console.error('Erreur:', error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
-      {/* Hero Section */}
-      <section className="relative bg-[#BE2722] text-white py-16 md:py-24">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: 'url("/logo.jpeg")',
-            backgroundSize: '200px',
-            backgroundRepeat: 'repeat',
-            opacity: 0.1
-          }} />
-        </div>
-        <div className="container mx-auto px-4 relative z-10">
+    <main className="min-h-screen bg-gray-50">
+      <section className="bg-gradient-to-r from-[#2E9B51] to-[#059669] text-white py-16">
+        <div className="container mx-auto px-4">
           <nav className="text-sm mb-6 text-white/80">
             <Link href={`/${locale}`} className="hover:text-white">Accueil</Link>
             <ChevronRight className="inline w-4 h-4 mx-2" />
             <span>Services Diocésains</span>
           </nav>
-          <h1 className="text-3xl md:text-5xl font-bold mb-4">Services Diocésains</h1>
-          <p className="text-lg md:text-xl text-white/90 max-w-2xl">
-            Découvrez les différents services au sein de l&apos;Archidiocèse de Yaoundé, 
-            dédiés à l&apos;accompagnement spirituel et au service de la communauté.
-          </p>
+          <h1 className="text-4xl lg:text-5xl font-bold text-center">Services Diocésains</h1>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-12 md:py-16">
+      <section className="py-8 bg-white shadow-sm">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {services.map((service) => {
-              const Icon = service.icon;
-              const isSelected = selectedService === service.id;
-              
-              return (
-                <div
-                  key={service.id}
-                  className={`bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer transform hover:-translate-y-1 ${
-                    isSelected ? 'ring-2 ring-[#BE2722]' : ''
-                  }`}
-                  onClick={() => setSelectedService(isSelected ? null : service.id)}
-                >
-                  <div className={`${service.color} p-4 flex items-center gap-3`}>
-                    <div className="w-12 h-12 bg-white/20 rounded-lg flex items-center justify-center">
-                      <Icon className="w-6 h-6 text-white" />
-                    </div>
-                    <h3 className="text-lg font-bold text-white">{service.name}</h3>
-                  </div>
-                  <div className="p-4">
-                    <p className="text-gray-600 text-sm leading-relaxed mb-4">
-                      {service.description}
-                    </p>
-                    
-                    {isSelected && (
-                      <div className="pt-4 border-t border-gray-100 space-y-2 animate-fadeIn">
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                          <Phone className="w-4 h-4 text-[#BE2722]" />
-                          <span>{service.contact.phone}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-sm text-gray-500">
-                          <Mail className="w-4 h-4 text-[#BE2722]" />
-                          <span>{service.contact.email}</span>
-                        </div>
-                      </div>
-                    )}
-                    
-                    <button className="mt-3 text-[#BE2722] text-sm font-semibold hover:underline flex items-center gap-1">
-                      {isSelected ? 'Masquer' : 'En savoir plus'}
-                      <ChevronRight className={`w-4 h-4 transition-transform ${isSelected ? 'rotate-90' : ''}`} />
-                    </button>
-                  </div>
-                </div>
-              );
-            })}
+          <div className="max-w-2xl mx-auto relative">
+            <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Rechercher..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-12 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-[#2E9B51]"
+            />
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-12 bg-gray-100">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            Besoin d&apos;un accompagnement ?
-          </h2>
-          <p className="text-gray-600 mb-6 max-w-xl mx-auto">
-            N&apos;hésitez pas à contacter le service concerné ou à vous rendre à l&apos;Archevêché 
-            pour plus d&apos;informations.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
-              href={`/${locale}/contact`}
-              className="inline-flex items-center justify-center px-6 py-3 bg-[#BE2722] text-white font-semibold rounded-lg hover:bg-[#a02020] transition-colors"
-            >
-              <Mail className="w-5 h-5 mr-2" />
-              Nous contacter
-            </Link>
-            <Link
-              href={`/${locale}/paroisses`}
-              className="inline-flex items-center justify-center px-6 py-3 bg-white text-gray-900 font-semibold rounded-lg border border-gray-300 hover:bg-gray-50 transition-colors"
-            >
-              <MapPin className="w-5 h-5 mr-2" />
-              Trouver une paroisse
-            </Link>
-          </div>
+      <section className="py-12">
+        <div className="container mx-auto px-4">
+          {isLoading ? (
+            <div className="text-center py-12">
+              <div className="inline-block w-12 h-12 border-4 border-[#2E9B51] border-t-transparent rounded-full animate-spin"></div>
+            </div>
+          ) : filteredServices.length === 0 ? (
+            <div className="text-center py-12">
+              <Users className="w-16 h-16 text-gray-300 mx-auto mb-4" />
+              <p className="text-gray-600">Aucun service disponible</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredServices.map((service) => (
+                <Link
+                  key={service._id}
+                  href={`/${locale}/services-diocesains/${service.slug}`}
+                  className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all p-6 group"
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="w-14 h-14 bg-gradient-to-br from-[#2E9B51] to-[#059669] rounded-xl flex items-center justify-center">
+                      <Users className="w-7 h-7 text-white" />
+                    </div>
+                    {service.category && (
+                      <span className="text-xs font-medium text-[#2E9B51] bg-green-50 px-3 py-1 rounded-full">
+                        {service.category}
+                      </span>
+                    )}
+                  </div>
+                  
+                  <h3 className="text-xl font-bold mb-2 group-hover:text-[#2E9B51]">
+                    {service.name}
+                  </h3>
+                  
+                  <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                    {service.description}
+                  </p>
+                  
+                  <div className="mt-4 pt-4 border-t flex items-center justify-between">
+                    <span className="text-[#2E9B51] font-semibold text-sm">Voir les détails</span>
+                    <ChevronRight className="w-5 h-5 text-[#2E9B51] group-hover:translate-x-1 transition-transform" />
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
         </div>
       </section>
-    </div>
+    </main>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ArrowLeft, Home, History, Info, Mail, Settings, Users, Calendar, FileText, Megaphone, MapPinned, Church } from "lucide-react";
+import { ArrowLeft, Home, History, Info, Mail, Settings, Users, Calendar, FileText, Megaphone, MapPinned, Church, Building2, GraduationCap, Cross } from "lucide-react";
 import ArchbishopForm from "./ArchbishopForm";
 import CrudManager from "./CrudManager";
 import { archbishopCrudConfig, ArchbishopData } from "./ArchbishopCrudConfig";
@@ -15,19 +15,26 @@ import { partnerCrudConfig, PartnerData } from './PartnerCrudConfig';
 import { historyCrudConfig, HistoryEventData } from './HistoryCrudConfig';
 import { radioShowCrudConfig, RadioShowData } from './RadioShowCrudConfig';
 import { tvShowCrudConfig, TVShowData } from './TVShowCrudConfig';
+import { diocesanServiceCrudConfig, DiocesanServiceData } from './DiocesanServiceCrudConfig';
+import { chaplaincyCrudConfig, ChaplaincyData } from './ChaplaincyCrudConfig';
+import { universityCrudConfig, UniversityData } from './UniversityCrudConfig';
+import { religiousInstituteCrudConfig, ReligiousInstituteData } from './ReligiousInstituteCrudConfig';
+import SimpleCrudManager from './SimpleCrudManager';
 
 interface AdminDashboardProps {
   locale: string;
 }
 
-type MainSection = "overview" | "accueil" | "historique" | "apropos" | "contact";
+type MainSection = "overview" | "accueil" | "historique" | "apropos" | "contact" | "services";
 type AccueilSubsection = "archbishop" | "curie" | "news" | "events" | "testimonials" | "partners" | "admissions" | "pastoralZones" | "parishes" | "radio" | "television";
 type HistoriqueSubsection = "historiquePage";
+type ServicesSubsection = "diocesanServices" | "chaplaincies" | "universities" | "religiousInstitutes";
 
 export default function AdminDashboard({ locale }: AdminDashboardProps) {
   const [currentSection, setCurrentSection] = useState<MainSection>("overview");
   const [currentSubsection, setCurrentSubsection] = useState<AccueilSubsection | null>(null);
   const [currentHistoriqueSubsection, setCurrentHistoriqueSubsection] = useState<HistoriqueSubsection | null>(null);
+  const [currentServicesSubsection, setCurrentServicesSubsection] = useState<ServicesSubsection | null>(null);
 
   const mainSections = [
     {
@@ -57,6 +64,13 @@ export default function AdminDashboard({ locale }: AdminDashboardProps) {
       description: "Gérer les informations de contact",
       icon: Mail,
       color: "bg-orange-50 border-orange-200 text-orange-900"
+    },
+    {
+      id: "services" as const,
+      title: "Services & Instituts",
+      description: "Gérer les services diocésains, aumôneries, universités et instituts religieux",
+      icon: Building2,
+      color: "bg-teal-50 border-teal-200 text-teal-900"
     }
   ];
 
@@ -126,6 +140,33 @@ export default function AdminDashboard({ locale }: AdminDashboardProps) {
       title: "Télévision Diocésaine",
       description: "Gérer les vidéos (directs & rediffusions)",
       icon: Settings
+    }
+  ];
+
+  const servicesSubsections = [
+    {
+      id: "diocesanServices" as const,
+      title: "Services Diocésains",
+      description: "Gérer les services diocésains",
+      icon: Building2
+    },
+    {
+      id: "chaplaincies" as const,
+      title: "Aumôneries",
+      description: "Gérer les aumôneries diocésaines",
+      icon: Cross
+    },
+    {
+      id: "universities" as const,
+      title: "Universités & Grandes Écoles",
+      description: "Gérer les aumôneries universitaires",
+      icon: GraduationCap
+    },
+    {
+      id: "religiousInstitutes" as const,
+      title: "Instituts Religieux",
+      description: "Gérer les instituts et congrégations religieuses",
+      icon: Church
     }
   ];
 
@@ -464,6 +505,90 @@ export default function AdminDashboard({ locale }: AdminDashboardProps) {
     );
   };
 
+  const renderServicesSubsections = () => (
+    <div>
+      <div className="flex items-center mb-6">
+        <button
+          onClick={() => setCurrentSection("overview")}
+          className="mr-4 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+        >
+          <ArrowLeft className="w-5 h-5" />
+        </button>
+        <div>
+          <h1 className="text-3xl font-bold tracking-tight">Services & Instituts</h1>
+          <p className="text-gray-600">Gérez les services diocésains, aumôneries, universités et instituts religieux.</p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        {servicesSubsections.map((subsection) => {
+          const Icon = subsection.icon;
+          return (
+            <button
+              key={subsection.id}
+              onClick={() => setCurrentServicesSubsection(subsection.id)}
+              className="bg-white border border-gray-200 rounded-lg p-6 text-left hover:shadow-md transition-all duration-200 hover:border-teal-300"
+            >
+              <div className="flex items-center mb-4">
+                <Icon className="w-6 h-6 mr-3 text-teal-600" />
+                <h3 className="text-lg font-semibold">{subsection.title}</h3>
+              </div>
+              <p className="text-sm text-gray-600">{subsection.description}</p>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+
+  const renderServicesSubsectionForm = () => {
+    if (!currentServicesSubsection) return null;
+
+    const subsection = servicesSubsections.find(s => s.id === currentServicesSubsection);
+    if (!subsection) return null;
+
+    return (
+      <div>
+        <div className="flex items-center mb-6">
+          <button
+            onClick={() => setCurrentServicesSubsection(null)}
+            className="mr-4 p-2 rounded-lg hover:bg-gray-100 transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <h1 className="text-3xl font-bold tracking-tight">{subsection.title}</h1>
+            <p className="text-gray-600">{subsection.description}</p>
+          </div>
+        </div>
+
+        <div className="bg-white border border-gray-200 rounded-lg p-6">
+          {currentServicesSubsection === "diocesanServices" ? (
+            <SimpleCrudManager config={diocesanServiceCrudConfig} />
+          ) : currentServicesSubsection === "chaplaincies" ? (
+            <SimpleCrudManager config={chaplaincyCrudConfig} />
+          ) : currentServicesSubsection === "universities" ? (
+            <SimpleCrudManager config={universityCrudConfig} />
+          ) : currentServicesSubsection === "religiousInstitutes" ? (
+            <SimpleCrudManager config={religiousInstituteCrudConfig} />
+          ) : (
+            <div className="text-center py-12">
+              <div className="text-gray-400 mb-4">
+                <Settings className="w-16 h-16 mx-auto" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Formulaire en cours de développement
+              </h3>
+              <p className="text-gray-600">
+                Cette section sera bientôt disponible pour la gestion du contenu.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+    );
+  };
+
   return (
     <div className="min-h-[70vh] container mx-auto px-4 py-8">
       {renderBreadcrumb()}
@@ -476,7 +601,11 @@ export default function AdminDashboard({ locale }: AdminDashboardProps) {
       
       {currentSection === "historique" && renderHistoriqueSubsections()}
       
-      {currentSection !== "overview" && currentSection !== "accueil" && currentSection !== "historique" && renderOtherSections()}
+      {currentSection === "services" && !currentServicesSubsection && renderServicesSubsections()}
+      
+      {currentSection === "services" && currentServicesSubsection && renderServicesSubsectionForm()}
+      
+      {currentSection !== "overview" && currentSection !== "accueil" && currentSection !== "historique" && currentSection !== "services" && renderOtherSections()}
     </div>
   );
 }
