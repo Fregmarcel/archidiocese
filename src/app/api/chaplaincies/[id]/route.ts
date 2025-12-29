@@ -4,11 +4,12 @@ import Chaplaincy from '@/models/Chaplaincy';
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connect();
-    const chaplaincy = await Chaplaincy.findById(params.id);
+    const { id } = await params;
+    const chaplaincy = await Chaplaincy.findById(id);
     
     if (!chaplaincy) {
       return NextResponse.json(
@@ -29,14 +30,15 @@ export async function GET(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connect();
+    const { id } = await params;
     const body = await request.json();
     
     const chaplaincy = await Chaplaincy.findByIdAndUpdate(
-      params.id,
+      id,
       body,
       { new: true, runValidators: true }
     );
@@ -60,11 +62,12 @@ export async function PUT(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connect();
-    const chaplaincy = await Chaplaincy.findByIdAndDelete(params.id);
+    const { id } = await params;
+    const chaplaincy = await Chaplaincy.findByIdAndDelete(id);
     
     if (!chaplaincy) {
       return NextResponse.json(

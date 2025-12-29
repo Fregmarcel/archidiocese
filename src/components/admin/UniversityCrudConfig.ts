@@ -102,6 +102,6 @@ export const universityCrudConfig = {
     { key: "name", label: "Nom" },
     { key: "type", label: "Type" },
     { key: "chaplain", label: "Aumônier" },
-    { key: "isActive", label: "Actif", render: (value: boolean) => value ? "✓" : "✗" }
+    { key: "isActive", label: "Actif", render: (value: unknown) => value ? "✓" : "✗" }
   ]
 };

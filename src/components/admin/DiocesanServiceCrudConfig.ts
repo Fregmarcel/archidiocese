@@ -96,6 +96,6 @@ export const diocesanServiceCrudConfig = {
     { key: "name", label: "Nom" },
     { key: "category", label: "Catégorie" },
     { key: "coordinator", label: "Coordinateur" },
-    { key: "isActive", label: "Actif", render: (value: boolean) => value ? "✓" : "✗" }
+    { key: "isActive", label: "Actif", render: (value: unknown) => value ? "✓" : "✗" }
   ]
 };

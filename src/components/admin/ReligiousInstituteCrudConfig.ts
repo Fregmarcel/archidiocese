@@ -122,11 +122,11 @@ export const religiousInstituteCrudConfig = {
   columns: [
     { key: "name", label: "Nom" },
     { key: "type", label: "Type" },
-    { key: "gender", label: "Genre", render: (value: string) => {
+    { key: "gender", label: "Genre", render: (value: unknown) => {
       const labels: Record<string, string> = { male: "♂", female: "♀", mixed: "♂♀" };
-      return labels[value] || value;
+      return labels[value as string] || String(value);
     }},
     { key: "numberOfMembers", label: "Membres" },
-    { key: "isActive", label: "Actif", render: (value: boolean) => value ? "✓" : "✗" }
+    { key: "isActive", label: "Actif", render: (value: unknown) => value ? "✓" : "✗" }
   ]
 };
