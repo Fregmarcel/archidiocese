@@ -252,9 +252,6 @@ export default function Header({ locale }: { locale: L }) {
           </div>
           {/* Right: login | register */}
           <div className="flex items-center justify-end gap-4">
-            {isAdmin && (
-              <Link href={`/${l}/admin`} className="uppercase hover:underline">Admin</Link>
-            )}
             <SignedOut>
               <SignInButton mode="modal" forceRedirectUrl={currentUrl} fallbackRedirectUrl={currentUrl}>
                 <button className="hover:underline uppercase">Login</button>
@@ -265,7 +262,22 @@ export default function Header({ locale }: { locale: L }) {
               </SignUpButton>
             </SignedOut>
             <SignedIn>
-              <UserButton afterSignOutUrl={currentUrl || `/${l}`} />
+              <UserButton afterSignOutUrl={currentUrl || `/${l}`}>
+                {isAdmin && (
+                  <UserButton.MenuItems>
+                    <UserButton.Link
+                      label="Admin Dashboard"
+                      labelIcon={
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2l-5.5 9h11z"/>
+                          <path d="M6.5 13l5.5 9 5.5-9z"/>
+                        </svg>
+                      }
+                      href={`/${l}/admin`}
+                    />
+                  </UserButton.MenuItems>
+                )}
+              </UserButton>
             </SignedIn>
           </div>
         </div>
@@ -458,14 +470,6 @@ export default function Header({ locale }: { locale: L }) {
 
               {/* Quick links */}
               <div className="p-4 border-t border-gray-800 space-y-3">
-                {isAdmin && (
-                  <Link href={`/${l}/admin`} onClick={() => setOpen(false)} className="flex items-center justify-center gap-2 rounded px-4 py-3 text-sm bg-green-600 text-white hover:bg-green-700 font-medium">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                    </svg>
-                    Admin
-                  </Link>
-                )}
                 <SignedOut>
                   <div className="grid grid-cols-2 gap-3">
                     <SignInButton mode="modal" forceRedirectUrl={currentUrl} fallbackRedirectUrl={currentUrl}>
@@ -494,7 +498,22 @@ export default function Header({ locale }: { locale: L }) {
                 </SignedOut>
                 <SignedIn>
                   <div className="flex items-center justify-center py-2">
-                    <UserButton afterSignOutUrl={currentUrl || `/${l}`} showName />
+                    <UserButton afterSignOutUrl={currentUrl || `/${l}`} showName>
+                      {isAdmin && (
+                        <UserButton.MenuItems>
+                          <UserButton.Link
+                            label="Admin Dashboard"
+                            labelIcon={
+                              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                                <path d="M12 2l-5.5 9h11z"/>
+                                <path d="M6.5 13l5.5 9 5.5-9z"/>
+                              </svg>
+                            }
+                            href={`/${l}/admin`}
+                          />
+                        </UserButton.MenuItems>
+                      )}
+                    </UserButton>
                   </div>
                 </SignedIn>
                 
